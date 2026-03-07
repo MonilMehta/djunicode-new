@@ -1,0 +1,30 @@
+[
+	{
+		"title": "Django",
+		"image": "../../images/about/django.svg"
+	},
+	{
+		"title": "React",
+		"image": "../../images/about/react.svg"
+	},
+	{
+		"title": "React Native",
+		"image": "../../images/about/react.svg"
+	},
+	{
+		"title": "Node.js",
+		"image": "../../images/about/nodejs.svg"
+	},
+	{
+		"title": "Flutter",
+		"image": "../../images/about/Flutter.svg"
+	},
+	{
+		"title":"UI/UX Design",
+		"image":"../../images/about/Figma.svg"
+	},
+	{
+		"title":"Blockchain",
+		"image":"../../images/about/blockchain.svg"
+	}
+]
