@@ -5,6 +5,23 @@ import { useState, useEffect } from "react";
 
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Track scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     // Prevent body scrolling when menu is open
     useEffect(() => {
@@ -23,14 +40,14 @@ export function Navbar() {
             {/* Main Navbar */}
             <header className="fixed top-0 left-0 right-0 z-40 mix-blend-difference px-6 py-4 flex items-center justify-between pointer-events-none">
                 {/* Left side: Brand Logo */}
-                <div className="flex items-center gap-4 pointer-events-auto">
+                <div className={`flex items-center gap-4 pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isScrolled ? '-translate-y-[150%] opacity-0' : 'translate-y-0 opacity-100'}`}>
                     <Link href="/" className="flex items-center">
                         <img src="/images/unicode-logo.svg" alt="DJ Unicode" className="h-14 w-auto mix-blend-difference" />
                     </Link>
                 </div>
 
                 {/* Middle: Navigation Links (Absolutely centered) */}
-                <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 text-[#9e9e9e] text-[11px] font-semibold tracking-widest pointer-events-auto mix-blend-difference">
+                <nav className={`absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 text-[#9e9e9e] text-[11px] font-semibold tracking-widest pointer-events-auto mix-blend-difference transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isScrolled ? '-translate-y-[250%] opacity-0' : 'translate-y-0 opacity-100'}`}>
                     <Link href="/" className="hover:text-white transition-colors pb-1 border-b border-[#9e9e9e]">HOME</Link>
                     <Link href="/about" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">ABOUT</Link>
                     <Link href="/members" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">MEMBERS</Link>
@@ -39,7 +56,7 @@ export function Navbar() {
 
                 {/* Right: Meta Info & Menu Button */}
                 <div className="flex items-center gap-6 pointer-events-auto mix-blend-difference">
-                    <div className="hidden lg:flex flex-col items-end text-[10px] text-[#9e9e9e] leading-tight text-right tracking-wider">
+                    <div className={`hidden lg:flex flex-col items-end text-[10px] text-[#9e9e9e] leading-tight text-right tracking-wider transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isScrolled ? '-translate-y-[150%] opacity-0' : 'translate-y-0 opacity-100'}`}>
                         <div className="flex gap-3 justify-end w-full">
                             <span>Based in</span>
                             <span>2026.03.08</span>
