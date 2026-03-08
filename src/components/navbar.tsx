@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export function BeatficNavbar() {
+export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Prevent body scrolling when menu is open
