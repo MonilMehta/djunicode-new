@@ -116,7 +116,10 @@ export function getAllProjects() {
         seMentees: resolveContributorGroup(project.contributors?.SEmentees),
       },
     }))
-    .sort((left, right) => new Date(right.year) - new Date(left.year));
+    .sort(
+      (left, right) =>
+        new Date(right.year).getTime() - new Date(left.year).getTime()
+    );
 
   return projectsCache;
 }

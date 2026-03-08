@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PrismClientWrapper from "@/components/prism/PrismClientWrapper";
 
 import { ArchiveCard } from "@/components/archive-card";
 import { SectionHeading } from "@/components/section-heading";
@@ -36,38 +37,8 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero-block">
-        <div className="shell hero-grid">
-          <div>
-            <p className="section-eyebrow">Student builders club</p>
-            <h1>
-              A sharper digital home for a club that teaches people to ship.
-            </h1>
-            <p className="hero-copy">
-              DJ Unicode is where students build with mentors, learn by making,
-              and leave behind a body of work that keeps compounding across batches.
-            </p>
-            <div className="hero-actions">
-              <Link href="/projects" className="primary-button">
-                Explore projects
-              </Link>
-              <Link href="/events" className="secondary-button">
-                Browse events
-              </Link>
-            </div>
-          </div>
-          <div className="hero-panel">
-            <p className="card-meta">What the archive already proves</p>
-            <div className="stats-grid">
-              {stats.map((item) => (
-                <article key={item.label} className="stat-card">
-                  <strong>{item.value}</strong>
-                  <span>{item.label}</span>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
+      <section className="relative w-full h-screen">
+        <PrismClientWrapper />
       </section>
 
       <section className="section-block">

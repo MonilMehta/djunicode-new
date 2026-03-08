@@ -1,15 +1,29 @@
 "use client";
 
+import type { ChangeEvent, FormEvent } from "react";
 import { useMemo, useState, useTransition } from "react";
 
-const initialValues = {
+type FormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+type FormErrors = Partial<Record<keyof FormValues, string>>;
+
+type FormStatus = {
+  tone: "error" | "success";
+  message: string;
+} | null;
+
+const initialValues: FormValues = {
   name: "",
   email: "",
   message: "",
 };
 
-function validate(values) {
-  const errors = {};
+function validate(values: FormValues): FormErrors {
+  const errors: FormErrors = {};
 
   if (!values.name.trim()) {
     errors.name = "Name is required.";
@@ -34,17 +48,19 @@ function validate(values) {
 
 export function ContactForm() {
   const [form, setForm] = useState(initialValues);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState<FormStatus>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isPending, startTransition] = useTransition();
   const errors = useMemo(() => validate(form), [form]);
 
-  const onChange = (event) => {
+  const onChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => ({ ...current, [name]: value } as FormValues));
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setHasSubmitted(true);
 
@@ -83,7 +99,10 @@ export function ContactForm() {
       } catch (error) {
         setStatus({
           tone: "error",
-          message: error.message || "Unable to send the message right now.",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Unable to send the message right now.",
         });
       }
     });
@@ -114,7 +133,7 @@ export function ContactForm() {
       </div>
       <label className="field">
         <span>Message</span>
-        <textarea name="message" rows="6" value={form.message} onChange={onChange} />
+        <textarea name="message" rows={6} value={form.message} onChange={onChange} />
         {hasSubmitted && errors.message ? (
           <small className="field-error">{errors.message}</small>
         ) : null}

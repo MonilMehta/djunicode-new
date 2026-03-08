@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { BeatficNavbar } from "@/components/beatfic-navbar";
 
 export const metadata = {
   metadataBase: new URL("https://www.djunicode.in"),
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="page-frame">
-          <Header />
+          <BeatficNavbar />
           <main>{children}</main>
           <Footer />
         </div>
