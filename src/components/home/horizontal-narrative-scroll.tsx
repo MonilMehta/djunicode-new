@@ -9,15 +9,19 @@ const TECH_STACKS = [
     { name: "React", desc: "UI Library", logo: "/images/techStacks/react.svg", placeholder: false },
     { name: "Node.js", desc: "Runtime", logo: "/images/techStacks/nodejs.svg", placeholder: false },
     { name: "Figma", desc: "Interface Design", logo: "/images/techStacks/Figma.svg", placeholder: false },
-    { name: "Django", desc: "Backend Framework", logo: "/images/techStacks/django.svg", placeholder: false },
     { name: "Git", desc: "Version Control", logo: "/images/techStacks/git.svg", placeholder: false },
-    { name: "Flask", desc: "Microframework", logo: "", placeholder: true },
-    { name: "Next.js", desc: "React Framework", logo: "", placeholder: true },
+    { name: "Django", desc: "Backend Framework", logo: "/images/techStacks/django.svg", placeholder: false },
+    { name: "Python", desc: "General Purpose", logo: "/images/techStacks/python.svg", placeholder: false },
+    { name: "JavaScript", desc: "Web Language", logo: "/images/techStacks/javascript.svg", placeholder: false },
+    { name: "Flutter", desc: "Mobile Framework", logo: "/images/techStacks/Flutter.svg", placeholder: false },
+    { name: "React Native", desc: "Mobile Framework", logo: "/images/techStacks/react.svg", placeholder: false },
+    { name: "Expo", desc: "React Native Tool", logo: "/images/techStacks/expo.svg", placeholder: false },
+    { name: "Next.js", desc: "React Framework", logo: "/images/techStacks/nextjs.svg", placeholder: false },
 ];
 
 // ─── Wheel geometry ───────────────────────────────────────────────────────────
 // Icons spread across the top arc, -30° to +30° from 12-o'clock
-const R = 800;  // px
+const R = 1000;  // px
 const ICON_COUNT = TECH_STACKS.length;
 const START_DEG = -40;
 const END_DEG = 40;
@@ -156,16 +160,17 @@ export function HorizontalNarrativeScroll() {
 
                         {/* ── WHEEL ──────────────────────────────────────────────── */}
                         {/*
-              The wheel's centre sits 180px below the panel bottom, horizontally centred.
-              At rotation +120°, every icon is off-screen to the right.
-              Scrolling rotates the wheel CCW to 0° — icons sweep in from the right
-              and settle into their final arc at the top of the circle.
+              // The wheel's centre sits far below the panel bottom, horizontally centred.
+              // At rotation +120°, every icon is off-screen to the right.
+              // Scrolling rotates the wheel CCW to 0° — icons sweep in from the right
+              // and settle into their final arc. The bottom value is tuned so the lowest
+              // icons (at the arc edges) sit just above the screen bottom.
             */}
                         <motion.div
                             className="absolute"
                             style={{
                                 left: "50%",
-                                bottom: "-180px",
+                                bottom: "-550px",
                                 x: "-50%", // keep centre at 50% of panel
                                 rotate: wheelRotate,
                                 transformOrigin: "0px 0px", // rotate around the point itself
@@ -185,24 +190,24 @@ export function HorizontalNarrativeScroll() {
                                             translateY: "-50%",
                                         }}
                                     >
-                                        {/* Card */}
-                                        <div className="w-[100px] h-[100px] rounded-2xl bg-[#111] border border-[#222] flex items-center justify-center shadow-lg group-hover:border-[#77CE90] group-hover:shadow-[0_0_24px_rgba(119,206,144,0.4)] transition-all duration-300 overflow-hidden">
+                                        {/* Pure Icon */}
+                                        <div className="w-[100px] h-[100px] flex items-center justify-center overflow-hidden drop-shadow-lg group-hover:scale-110 group-hover:drop-shadow-[0_0_16px_rgba(119,206,144,0.4)] transition-all duration-300">
                                             {tech.placeholder ? (
-                                                <span className="text-white/80 font-mono font-bold text-xl select-none">
+                                                <span className="text-white/80 font-mono font-bold text-3xl select-none">
                                                     {tech.name === "Next.js" ? "▲" : "~"}
                                                 </span>
                                             ) : (
                                                 <Image
                                                     src={tech.logo}
                                                     alt={tech.name}
-                                                    width={42}
-                                                    height={42}
-                                                    className="w-[58%] h-[58%] object-contain"
+                                                    width={70}
+                                                    height={70}
+                                                    className="w-[70%] h-[70%] object-contain"
                                                 />
                                             )}
                                         </div>
                                         {/* Label */}
-                                        <p className="mt-2 text-center text-white/50 text-[13px] font-medium tracking-wide group-hover:text-[#77CE90] transition-colors whitespace-nowrap">
+                                        <p className="mt-2 text-center text-white/70 text-[14px] font-medium tracking-wide group-hover:text-[#77CE90] transition-colors whitespace-nowrap drop-shadow-md">
                                             {tech.name}
                                         </p>
                                     </motion.div>
