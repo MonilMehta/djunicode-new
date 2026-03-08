@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PrismClientWrapper from "@/components/prism/PrismClientWrapper";
+import { HorizontalNarrativeScroll } from "@/components/home/horizontal-narrative-scroll";
 
 import { ArchiveCard } from "@/components/archive-card";
 import { SectionHeading } from "@/components/section-heading";
@@ -40,6 +41,8 @@ export default function HomePage() {
       <section className="relative w-full h-screen">
         <PrismClientWrapper />
       </section>
+
+      <HorizontalNarrativeScroll />
 
       <section className="section-block">
         <div className="shell">
