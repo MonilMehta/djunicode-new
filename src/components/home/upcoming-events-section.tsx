@@ -15,6 +15,8 @@ import { ArrowRight, ArrowUpRight, CalendarDays } from "lucide-react";
 interface Event {
     title: string;
     description: string;
+    time?: string;
+    venue?: string;
     slug: string;
     links?: string[];
     gallery: string[];
@@ -305,7 +307,7 @@ export function UpcomingEventsSection({ event }: { event: Event | null }) {
                             {/* Image */}
                             <motion.div
                                 style={{ clipPath: imageClip }}
-                                className="w-full md:w-[260px] lg:w-[320px] will-change-transform"
+                                className="w-[60vw] md:w-[400px] lg:w-[480px] will-change-transform"
                             >
                                 <div
                                     className="relative w-full rounded-xl overflow-hidden bg-[#0A0A0A] border border-white/[0.06]"
@@ -369,6 +371,33 @@ export function UpcomingEventsSection({ event }: { event: Event | null }) {
                                         </Link>
                                     </motion.div>
                                 </div>
+
+                                {/* Description & Details */}
+                                <motion.div
+                                    style={{ opacity: ctaOp, y: ctaY }}
+                                    className="flex flex-col gap-3 mt-2 md:max-w-md lg:max-w-lg"
+                                >
+                                    <p className="text-white/70 text-base md:text-lg leading-relaxed line-clamp-4 md:line-clamp-none font-medium">
+                                        {event.description}
+                                    </p>
+
+                                    {(event.time || event.venue) && (
+                                        <div className="flex flex-col gap-1.5 mt-2 text-sm text-white/50 font-mono">
+                                            {event.time && (
+                                                <div className="flex items-center gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                                                    <span>{event.time}</span>
+                                                </div>
+                                            )}
+                                            {event.venue && (
+                                                <div className="flex items-center gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                                                    <span>{event.venue}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </motion.div>
                             </div>
                         </div>
                     )}

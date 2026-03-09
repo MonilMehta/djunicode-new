@@ -145,6 +145,8 @@ export function getAllEvents() {
         ...event,
         inferredYear,
         yearLabel: inferredYear ? String(inferredYear) : "Archive",
+        time: event.time || null,
+        venue: event.venue || null,
         gallery: (event.images ?? []).map(toAssetPath).filter(Boolean),
         contributorsResolved: {
           guests: resolveContributorGroup(event.contributors?.Externals),

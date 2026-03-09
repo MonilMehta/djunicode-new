@@ -1,0 +1,18 @@
+{
+    "title": "UniHacks 2026",
+    "description": "Unicode's first hackathon for its mentees! Come work in teams, build cool side projects, work on coffee and redbull, get kickass mentoring, and come out with an amazing experience. This is your chance to push your limits, innovate, and collaborate with peers.",
+    "time": "10:00 AM - 6:00 PM",
+    "venue": "DJSCE Campus, Mumbai",
+    "slug": "unihacks",
+    "links": [
+        "https://forms.gle/gr9hrzjRrViCc6h1A"
+    ],
+    "images": [
+        "../../images/events/unihacks1.png"
+    ],
+    "contributors": {
+        "Externals": [],
+        "TEmentors": [],
+        "SEmentees": []
+    }
+}
