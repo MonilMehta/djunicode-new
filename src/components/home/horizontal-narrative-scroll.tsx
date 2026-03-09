@@ -56,6 +56,26 @@ export function HorizontalNarrativeScroll() {
     const c3 = useTransform(scrollYProgress, [0.28, 0.36], ["rgba(255,255,255,0.35)", "#34D399"]);
     const c4 = useTransform(scrollYProgress, [0.36, 0.44], ["rgba(255,255,255,0.35)", "#F59E0B"]);
 
+    // ── Phase 1.5: Image stacked animations ──────────────────────
+    const img1Y = useTransform(scrollYProgress, [0.05, 0.15], [300, 0]);
+    const img1Op = useTransform(scrollYProgress, [0.05, 0.15], [0, 1]);
+
+    const img2Y = useTransform(scrollYProgress, [0.15, 0.25], [300, 0]);
+    const img2Op = useTransform(scrollYProgress, [0.15, 0.25], [0, 1]);
+
+    const img3Y = useTransform(scrollYProgress, [0.25, 0.35], [300, 0]);
+    const img3Op = useTransform(scrollYProgress, [0.25, 0.35], [0, 1]);
+
+    const img4Y = useTransform(scrollYProgress, [0.35, 0.45], [300, 0]);
+    const img4Op = useTransform(scrollYProgress, [0.35, 0.45], [0, 1]);
+
+    const imagesTransforms = [
+        { y: img1Y, opacity: img1Op, rotate: -6, left: "0%", top: "0%", src: "/images/groupPhotos/celestia2025.png" },
+        { y: img2Y, opacity: img2Op, rotate: 4, left: "-5%", top: "-5%", src: "/images/groupPhotos/futureplan2025.png" },
+        { y: img3Y, opacity: img3Op, rotate: -3, left: "5%", top: "2%", src: "/images/groupPhotos/unihacks2026.png" },
+        { y: img4Y, opacity: img4Op, rotate: 5, left: "-2%", top: "-10%", src: "/images/groupPhotos/hackprep2025.png" },
+    ];
+
     // ── Phase 2 (0.40 → 0.56): horizontal pan —  ─────────────────────────────
     // Strip shifts left so "our stack" panel slides in
     const stripX = useTransform(scrollYProgress, [0.40, 0.56], ["0vw", "-100vw"]);
@@ -84,8 +104,8 @@ export function HorizontalNarrativeScroll() {
                 >
 
                     {/* ── Panel 1: README ─────────────────────────────────────── */}
-                    <div className="w-screen h-full shrink-0 flex flex-col justify-start pt-[12vh] pl-10">
-                        <div className="max-w-4xl">
+                    <div className="w-screen h-full shrink-0 flex flex-col justify-start pt-[12vh] pl-10 relative">
+                        <div className="max-w-4xl z-10">
                             <h2
                                 className="text-white"
                                 style={{
@@ -122,6 +142,32 @@ export function HorizontalNarrativeScroll() {
                                     {" "}we grow by building together and teaching each other.
                                 </p>
                             </div>
+                        </div>
+
+                        {/* ── Stacked Photos ────────────────────────────────────────── */}
+                        <div className="absolute right-[20%] bottom-[10vh] md:right-[35%] md:bottom-[15vh] w-[280px] h-[200px] md:w-[450px] md:h-[320px] z-0 pointer-events-none">
+                            {imagesTransforms.map((img, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    style={{
+                                        y: img.y,
+                                        opacity: img.opacity,
+                                        rotate: img.rotate,
+                                        left: img.left,
+                                        top: img.top,
+                                        WebkitMaskImage: "radial-gradient(ellipse at center, black 60%, transparent 100%)",
+                                        maskImage: "radial-gradient(ellipse at center, black 60%, transparent 100%)",
+                                    }}
+                                    className="absolute w-full h-full overflow-hidden bg-black/50"
+                                >
+                                    <Image
+                                        src={img.src}
+                                        alt={`Group photo ${idx + 1}`}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
 

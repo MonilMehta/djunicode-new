@@ -15,7 +15,7 @@
 		" Django",
 		" DjangoRestFramework",
 		" MySQL",
-        " Flutter"
+		" Flutter"
 	],
 	"tech": [
 		"web",
@@ -26,12 +26,12 @@
 		"TEmentors": [
 			100,
 			96,
-            109,
-            110,
-            111,
-            112,
-            113,
-            114
+			109,
+			110,
+			111,
+			112,
+			113,
+			114
 		],
 		"SEmentees": [
 			136,
@@ -50,6 +50,6 @@
 	},
 	"year": "2024-06-10",
 	"links": [
-        "https://github.com/djunicode/noteng"
-    ]
+		"https://github.com/djunicode/noteng"
+	]
 }

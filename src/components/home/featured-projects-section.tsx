@@ -122,7 +122,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                                     <div className="mt-6 md:mt-8 flex justify-between items-start">
                                         <div>
                                             <span className="block text-white/50 font-mono text-xs md:text-sm tracking-widest uppercase mb-2">
-                                                {String(idx + 1).padStart(2, "0")} — {project.type?.[0] || "Featured"}
+                                                {String(idx + 1).padStart(2, "0")} — {project.type?.length > 0 ? project.type.join(" + ") : "Featured"}
                                             </span>
                                             <h3
                                                 className="text-white text-3xl md:text-5xl font-bold tracking-tight"
