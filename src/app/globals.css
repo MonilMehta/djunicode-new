@@ -631,6 +631,31 @@ p {
   margin-top: 0.75rem;
 }
 
+/* Footer link hover underline */
+.footer-link {
+  color: #999 !important;
+  transition: color 200ms ease;
+}
+
+.footer-link:hover {
+  color: #fff !important;
+}
+
+.footer-link-underline {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 0;
+  background: rgba(255, 255, 255, 0.5);
+  transition: width 300ms ease-out;
+  display: block;
+}
+
+.footer-link:hover .footer-link-underline {
+  width: 100%;
+}
+
 .image-fallback {
   width: 100%;
   height: 100%;

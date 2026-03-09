@@ -2,6 +2,7 @@ import "./globals.css";
 
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { getContactDetails } from "@/lib/content";
 
 export const metadata = {
   metadataBase: new URL("https://www.djunicode.in"),
@@ -14,13 +15,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const contact = getContactDetails();
+
   return (
     <html lang="en">
       <body>
         <div className="page-frame">
           <Navbar />
           <main>{children}</main>
-          <Footer />
+          <Footer contact={contact} />
         </div>
       </body>
     </html>

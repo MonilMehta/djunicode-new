@@ -166,6 +166,10 @@ export function getEventBySlug(slug) {
   return getAllEvents().find((event) => event.slug === slug) ?? null;
 }
 
+export function getUpcomingEvent() {
+  return getAllEvents()[0] ?? null;
+}
+
 export function getFeaturedProjects() {
   const featuredTitles = readJson(
     path.join("projects_featured", "featuredProjects.json")
