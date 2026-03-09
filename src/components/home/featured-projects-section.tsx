@@ -40,10 +40,10 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
             // Multiply height by number of projects to give enough scroll distance
             style={{ height: `${(projects.length * 100)}vh` }}
         >
-            <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row overflow-hidden border-t border-[#222]">
+            <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
 
                 {/* ── Left Side: Pinned Header ───────────────────────────── */}
-                <div className="w-full md:w-[40%] h-auto md:h-full px-6 md:px-12 pt-16 md:pt-32 pb-8 md:pb-32 flex flex-col justify-between shrink-0 z-20 bg-[#050505] md:bg-transparent border-b md:border-b-0 md:border-r border-[#222]">
+                <div className="w-full md:w-[40%] h-auto md:h-full px-6 md:px-12 pt-16 md:pt-32 pb-8 md:pb-32 flex flex-col justify-between shrink-0 z-30 bg-[#050505] shadow-[0_10px_40px_rgba(0,0,0,0.8)] md:shadow-[20px_0_50px_rgba(0,0,0,0.9)] position-relative">
                     <div>
                         <div className="flex items-center gap-3 mb-8">
                             <span className="w-2 h-2 rounded-full bg-[#77CE90] shadow-[0_0_8px_rgba(119,206,144,0.6)] animate-pulse" />
@@ -84,7 +84,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                 </div>
 
                 {/* ── Right Side: Horizontally Scrolling Cards ───────────── */}
-                <div className="w-full md:w-[60%] h-full flex items-center relative overflow-hidden bg-[#0A0A0A]">
+                <div className="w-full md:w-[60%] h-full flex items-center relative overflow-hidden bg-[#050505]">
                     <motion.div
                         className="flex items-center gap-8 md:gap-16 px-6 md:px-16"
                         style={{
@@ -151,7 +151,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                 </div>
 
                 {/* Mobile View Archive Button */}
-                <div className="w-full p-6 pb-12 bg-[#0A0A0A] md:hidden border-t border-[#222]">
+                <div className="w-full p-6 pb-12 bg-[#050505] md:hidden border-t border-[#222]">
                     <Link
                         href="/projects"
                         className="flex w-full justify-center items-center gap-3 bg-[#111] border border-[#333] text-white px-8 py-4 rounded-full font-bold uppercase tracking-wide text-sm"

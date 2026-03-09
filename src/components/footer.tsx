@@ -3,7 +3,7 @@ import Link from "next/link";
 export function Footer({ contact }: { contact: any }) {
   return (
     <div style={{ background: "#050505", paddingTop: "8rem" }}>
-      <footer style={{ background: "#111", color: "#fff", overflow: "hidden", borderRadius: "32px 32px 0 0", borderTop: "1px solid #2a2a2a" }}>
+      <footer style={{ background: "#111", color: "#fff", overflow: "hidden", borderRadius: "32px 32px 0 0" }}>
 
         {/* ── Top: Tagline & Link Columns ──────────────────────────────── */}
         <div style={{ maxWidth: 1440, margin: "0 auto", padding: "4rem 4rem 0rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem", flexWrap: "wrap" }}>
