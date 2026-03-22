@@ -6,11 +6,18 @@
         "https://svkmmumbai-my.sharepoint.com/personal/aditi_kamath1_svkmmumbai_onmicrosoft_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Faditi%5Fkamath1%5Fsvkmmumbai%5Fonmicrosoft%5Fcom%2FDocuments%2FRecordings%2FUnicode%20Git%20session%2D20210912%5F151315%2DMeeting%20Recording%2Emp4&ga=1"
     ],
     "images": [
-        "../../images/events/gitsession_1_cover.png"
+        "../../images/events/2021/gitsession_1_cover.png"
     ],
     "contributors": {
-        "Externals": [0],
-        "TEmentors": [84, 60, 75, 68],
+        "Externals": [
+            0
+        ],
+        "TEmentors": [
+            84,
+            60,
+            75,
+            68
+        ],
         "SEmentees": []
     }
 }

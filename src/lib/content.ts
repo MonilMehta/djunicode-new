@@ -10,11 +10,24 @@ function readJson(relativePath) {
 function readCollection(relativeDir) {
   const directory = path.join(dataRoot, relativeDir);
 
-  return fs
-    .readdirSync(directory)
-    .filter((file) => file.endsWith(".json"))
+  const getFiles = (dir) => {
+    let results = [];
+    const list = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of list) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        results = results.concat(getFiles(fullPath));
+      } else if (entry.name.endsWith(".json")) {
+        results.push(fullPath);
+      }
+    }
+    return results;
+  };
+
+  return getFiles(directory)
+    .map((absPath) => path.relative(dataRoot, absPath))
     .sort((left, right) => left.localeCompare(right))
-    .map((file) => readJson(path.join(relativeDir, file)));
+    .map((relativePath) => readJson(relativePath));
 }
 
 function toAssetPath(value) {

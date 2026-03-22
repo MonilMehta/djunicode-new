@@ -6,11 +6,20 @@
         "https://www.youtube.com/playlist?list=PLYgB3kDrpIevqRTmtFKEJKJe8Z6jkgt1l"
     ],
     "images": [
-        "../../images/events/hackprep3_1_1.png"
+        "../../images/events/2022/hackprep3_1_1.png"
     ],
     "contributors": {
-        "Externals": [0],
-        "TEmentors": [84, 64, 60, 68, 72, 65],
+        "Externals": [
+            0
+        ],
+        "TEmentors": [
+            84,
+            64,
+            60,
+            68,
+            72,
+            65
+        ],
         "SEmentees": []
     }
 }

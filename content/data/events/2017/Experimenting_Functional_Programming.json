@@ -4,11 +4,13 @@
     "slug": "experimenting-functional-programming",
     "links": [],
     "images": [
-        "../../images/events/Exp-Functional_prog.png"
+        "../../images/events/2017/Exp-Functional_prog.png"
     ],
     "contributors": {
         "Externals": [],
-        "TEmentors": [49],
+        "TEmentors": [
+            49
+        ],
         "SEmentees": []
     }
 }

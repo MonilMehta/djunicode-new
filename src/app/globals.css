@@ -60,7 +60,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Removed scroll-behavior: smooth as it causes scroll to animate from top to bottom on Nextjs back navigation */
+  scroll-behavior: auto;
 }
 
 body {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PrismClientWrapper from "@/components/prism/PrismClientWrapper";
 import { HorizontalNarrativeScroll } from "@/components/home/horizontal-narrative-scroll";
+import { HomeFadeIn } from "@/components/home/home-fade-in";
 import { FoundersSection } from "@/components/home/founders-section";
 import { FacultySection } from "@/components/home/faculty-section";
 import { UpcomingEventsSection } from "@/components/home/upcoming-events-section";
@@ -39,7 +40,7 @@ export default function HomePage() {
   const stacks = getTechStacks();
 
   return (
-    <>
+    <HomeFadeIn>
       <section className="relative w-full h-screen">
         <PrismClientWrapper />
       </section>
@@ -50,6 +51,6 @@ export default function HomePage() {
       <FacultySection faculty={faculty} />
       <UpcomingEventsSection event={upcomingEvent} />
       <FeaturedProjectsSection projects={recentProjects.slice(0, 3)} />
-    </>
+    </HomeFadeIn>
   );
 }

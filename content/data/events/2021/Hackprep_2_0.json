@@ -6,11 +6,24 @@
         "https://www.youtube.com/watch?v=HZfSajAzIEI"
     ],
     "images": [
-        "../../images/events/Hackprep2.png"
+        "../../images/events/2021/Hackprep2.png"
     ],
     "contributors": {
-        "Externals": [0],
-        "TEmentors": [59, 60, 61, 62],
-        "SEmentees": [63, 64, 65, 66, 67]
+        "Externals": [
+            0
+        ],
+        "TEmentors": [
+            59,
+            60,
+            61,
+            62
+        ],
+        "SEmentees": [
+            63,
+            64,
+            65,
+            66,
+            67
+        ]
     }
 }
