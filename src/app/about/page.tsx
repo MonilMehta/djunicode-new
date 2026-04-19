@@ -5,6 +5,7 @@ import { Space_Mono } from "next/font/google";
 import { motion } from "framer-motion";
 import { GitlogSection } from "./components/gitlog-section";
 import { AlumniMapSection } from "./components/alumni-map-section";
+import { DirectoryCtaSection } from "./components/directory-cta-section";
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -332,6 +333,7 @@ export default function AboutPage() {
         <GitlogSection />
       </div>
       <AlumniMapSection />
+      <DirectoryCtaSection />
     </div>
   );
 }
