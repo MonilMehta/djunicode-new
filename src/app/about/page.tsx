@@ -1,0 +1,337 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { Space_Mono } from "next/font/google";
+import { motion } from "framer-motion";
+import { GitlogSection } from "./components/gitlog-section";
+import { AlumniMapSection } from "./components/alumni-map-section";
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+});
+
+const ABOUT_STATS = [
+  { value: "2017", label: "Founded", note: "where this started" },
+  { value: "7+", label: "Batches", note: "consistent yearly momentum" },
+  { value: "50+", label: "Projects shipped", note: "real builds, not toy demos" },
+  { value: "∞", label: "Commits reviewed", note: "feedback loop never ends" },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const staggerCards = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+export default function AboutPage() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let W: number, H: number, dpr: number;
+    let dots: number[] | null = null;
+    let dotI: number[] = [];
+    const mouse = { x: -9999, y: -9999 };
+
+    const STEP = 5; // smaller = more dots
+    const DR = 1.5; // dot radius CSS px
+    const HR = 140; // hover radius CSS px
+    const BRIGHT_THRESH = 55; // lower = pick up more dots from image
+    const LERP_S = 0.08;
+
+    const BASE = [42, 42, 42];
+    const RAMP = [
+      [210, 72, 42],
+      [240, 145, 65],
+      [245, 208, 90],
+    ];
+
+    function lerp(a: number, b: number, t: number) {
+      return a + (b - a) * t;
+    }
+
+    function getColor(i: number) {
+      if (i <= 0) return BASE;
+      if (i < 0.33) {
+        const t = i / 0.33;
+        return BASE.map((v, j) => lerp(v, RAMP[0][j], t) | 0);
+      }
+      if (i < 0.67) {
+        const t = (i - 0.33) / 0.34;
+        return RAMP[0].map((v, j) => lerp(v, RAMP[1][j], t) | 0);
+      }
+      const t = (i - 0.67) / 0.33;
+      return RAMP[1].map((v, j) => lerp(v, RAMP[2][j], t) | 0);
+    }
+
+    let animationFrameId: number;
+
+    function init() {
+      if (!canvas || !ctx) return;
+      const parent = canvas.parentElement;
+      if (!parent) return;
+
+      const rect = parent.getBoundingClientRect();
+      dpr = window.devicePixelRatio || 1;
+      W = canvas.width = rect.width * dpr;
+      H = canvas.height = rect.height * dpr;
+
+      const img = new Image();
+      img.onload = () => {
+        const off = document.createElement("canvas");
+        off.width = W;
+        off.height = H;
+        const oc = off.getContext("2d");
+        if (!oc) return;
+
+        const scale = Math.max(W / img.width, H / img.height);
+        const dw = img.width * scale;
+        const dh = img.height * scale;
+        const dx = (W - dw) / 2;
+        const dy = (H - dh) / 2;
+        oc.drawImage(img, dx, dy, dw, dh);
+
+        const pxData = oc.getImageData(0, 0, W, H).data;
+        const step = STEP * dpr;
+        const rawD: number[] = [];
+        const rawI: number[] = [];
+
+        for (let y = step / 2; y < H; y += step) {
+          for (let x = step / 2; x < W; x += step) {
+            const p = (Math.floor(y) * W + Math.floor(x)) * 4;
+            const brightness = (pxData[p] + pxData[p + 1] + pxData[p + 2]) / 3;
+            if (pxData[p + 3] > 50 && brightness > BRIGHT_THRESH) {
+              rawD.push(x, y);
+              rawI.push(0);
+            }
+          }
+        }
+
+        dots = rawD;
+        dotI = rawI;
+      };
+      
+      img.src = "/about-hero.jpg";
+    }
+
+    function draw() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, W, H);
+      
+      if (!dots) {
+        animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
+
+      const mx = mouse.x * dpr;
+      const my = mouse.y * dpr;
+      const hr = HR * dpr;
+      const dr = DR * dpr;
+      const n = dotI.length;
+
+      for (let i = 0; i < n; i++) {
+        const x = dots[i * 2];
+        const y = dots[i * 2 + 1];
+        const dist = Math.hypot(x - mx, y - my);
+        const target = dist < hr ? Math.pow(1 - dist / hr, 1.6) : 0;
+        dotI[i] += (target - dotI[i]) * LERP_S;
+        
+        const col = getColor(dotI[i]);
+        ctx.beginPath();
+        ctx.arc(x, y, dr, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`;
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(draw);
+    }
+
+    const onMouseMove = (e: MouseEvent) => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    };
+
+    const onMouseLeave = () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const r = canvas.getBoundingClientRect();
+      const t = e.touches[0];
+      mouse.x = t.clientX - r.left;
+      mouse.y = t.clientY - r.top;
+    };
+
+    const onTouchEnd = () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    };
+
+    const onResize = () => {
+      init();
+    };
+
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mouseleave", onMouseLeave);
+    canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    canvas.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("resize", onResize);
+
+    init();
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      canvas.removeEventListener("mousemove", onMouseMove);
+      canvas.removeEventListener("mouseleave", onMouseLeave);
+      canvas.removeEventListener("touchmove", onTouchMove);
+      canvas.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  return (
+    <div className={`bg-[#080808] text-[#e0e0e0] w-full min-h-screen ${spaceMono.className}`}>
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeUp {
+          animation: fadeUp 1s ease both;
+        }
+      `}</style>
+
+      {/* HERO SECTION */}
+      <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden border-b border-[#161616] flex flex-col">
+        <canvas
+          ref={canvasRef}
+          id="c"
+          className="absolute inset-0 w-full h-full block cursor-crosshair"
+        />
+
+        <div className="relative z-10 pt-[52px] px-[52px] pointer-events-none animate-fadeUp">
+          <h1 className="text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]">
+            about us
+          </h1>
+        </div>
+
+        <div 
+          className="relative z-10 mt-auto px-[52px] pb-[64px] pointer-events-none animate-fadeUp max-w-[800px]" 
+          style={{ animationDelay: "0.2s" }}
+        >
+          <div className="flex flex-col gap-4 md:gap-6">
+            <h3 className="text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] text-white/40 tracking-[-0.02em]" style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
+              The best way to learn to code is to <span className="text-white/90">ship something real.</span>
+            </h3>
+            <h3 className="text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] text-white/40 tracking-[-0.02em]" style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
+              The best way to master it is to <span className="text-white/90">explain it to someone else.</span>
+            </h3>
+            <p className={`text-[12px] md:text-[14px] uppercase tracking-[0.2em] text-[#77CE90] mt-4 md:mt-6 ${spaceMono.className}`}>
+              That&apos;s the whole thing, really.
+            </p>
+          </div>
+        </div>
+
+        <p 
+          className="absolute bottom-[28px] right-[52px] text-[8px] tracking-[0.35em] uppercase text-[#1a1a1a] pointer-events-none z-10 animate-fadeUp" 
+          style={{ animationDelay: "0.8s" }}
+        >
+          move your cursor
+        </p>
+      </section>
+
+      {/* Numbers */}
+      {/* <section className="relative border-y border-[#141414] bg-[#050505] overflow-hidden">
+        <div className="relative px-6 md:px-[52px] py-16 md:py-20">
+          <motion.h2
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.35 }}
+            className="text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]"
+          >
+            numbers
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.35 }}
+            className="mt-6 max-w-[640px] text-[14px] md:text-[16px] leading-[1.75] text-white/42"
+          >
+            We are a college coding club. We learn by building projects together,
+            reviewing each other&apos;s code, and shipping consistently.
+          </motion.p>
+
+          <motion.div
+            variants={staggerCards}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mt-10 grid sm:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4"
+          >
+            {ABOUT_STATS.map((stat, idx) => (
+              <motion.article
+                key={stat.label}
+                variants={fadeUp}
+                className="group rounded-2xl border border-white/10 bg-white/[0.02] px-5 py-6 md:px-6 md:py-7 transition-all duration-300 hover:bg-white/[0.04] hover:border-white/18"
+                style={{ transform: idx % 2 === 0 ? "translateY(0)" : "translateY(8px)" }}
+              >
+                <p
+                  className="text-white/86 mb-2"
+                  style={{
+                    fontFamily: "'Satoshi','Inter',sans-serif",
+                    fontSize: "clamp(2rem,5.5vw,3.9rem)",
+                    fontWeight: 700,
+                    lineHeight: 0.92,
+                    letterSpacing: "-0.04em",
+                  }}
+                >
+                  {stat.value}
+                </p>
+
+                <p className={`text-[10px] tracking-[0.28em] uppercase text-white/66 mb-2 ${spaceMono.className}`}>
+                  {stat.label}
+                </p>
+
+                <p className="text-[12px] leading-[1.65] text-white/32 group-hover:text-white/44 transition-colors duration-300">
+                  {stat.note}
+                </p>
+              </motion.article>
+            ))}
+          </motion.div>
+
+        </div>
+      </section> */}
+
+      <div className="">
+        <GitlogSection />
+      </div>
+      <AlumniMapSection />
+    </div>
+  );
+}
