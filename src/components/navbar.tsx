@@ -52,6 +52,7 @@ export function Navbar() {
                     <Link href="/about" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">ABOUT</Link>
                     <Link href="/members" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">MEMBERS</Link>
                     <Link href="/projects" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">PROJECTS</Link>
+                    <Link href="/blog" className="hover:text-white transition-colors pb-1 border-b border-transparent hover:border-[#9e9e9e]">BLOG</Link>
                 </nav>
 
                 {/* Right: Meta Info & Menu Button */}
@@ -114,6 +115,10 @@ export function Navbar() {
                         <Link href="/members" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
                             <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">MEMBERS</span>
+                        </Link>
+                        <Link href="/blog" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
+                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                            <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">BLOG</span>
                         </Link>
                         <Link href="/contact" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
                             <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />

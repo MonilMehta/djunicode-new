@@ -108,42 +108,107 @@ export function ContactForm() {
     });
   };
 
+  const DISPLAY_SANS = "'Satoshi','Inter',system-ui,sans-serif";
+
   return (
-    <form className="contact-form" onSubmit={onSubmit}>
-      <div className="field-grid">
-        <label className="field">
-          <span>Name</span>
-          <input name="name" value={form.name} onChange={onChange} />
+    <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        {/* Name */}
+        <label className="flex flex-col gap-2">
+          <span
+            className="text-[11px] uppercase tracking-[0.18em] text-white/40"
+            style={{ fontFamily: "'Space Mono', monospace" }}
+          >
+            Name
+          </span>
+          <input
+            name="name"
+            value={form.name}
+            onChange={onChange}
+            placeholder="Your name"
+            className="w-full px-5 py-4 rounded-2xl bg-white/[0.05] border border-white/[0.08] text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all duration-200"
+            style={{ fontFamily: DISPLAY_SANS, fontSize: "15px" }}
+          />
           {hasSubmitted && errors.name ? (
-            <small className="field-error">{errors.name}</small>
+            <small className="text-[#e05b5b] text-xs mt-0.5">{errors.name}</small>
           ) : null}
         </label>
-        <label className="field">
-          <span>Email</span>
+
+        {/* Email */}
+        <label className="flex flex-col gap-2">
+          <span
+            className="text-[11px] uppercase tracking-[0.18em] text-white/40"
+            style={{ fontFamily: "'Space Mono', monospace" }}
+          >
+            Email
+          </span>
           <input
             name="email"
             type="email"
             value={form.email}
             onChange={onChange}
+            placeholder="your@email.com"
+            className="w-full px-5 py-4 rounded-2xl bg-white/[0.05] border border-white/[0.08] text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all duration-200"
+            style={{ fontFamily: DISPLAY_SANS, fontSize: "15px" }}
           />
           {hasSubmitted && errors.email ? (
-            <small className="field-error">{errors.email}</small>
+            <small className="text-[#e05b5b] text-xs mt-0.5">{errors.email}</small>
           ) : null}
         </label>
       </div>
-      <label className="field">
-        <span>Message</span>
-        <textarea name="message" rows={6} value={form.message} onChange={onChange} />
+
+      {/* Message */}
+      <label className="flex flex-col gap-2">
+        <span
+          className="text-[11px] uppercase tracking-[0.18em] text-white/40"
+          style={{ fontFamily: "'Space Mono', monospace" }}
+        >
+          Message
+        </span>
+        <textarea
+          name="message"
+          rows={5}
+          value={form.message}
+          onChange={onChange}
+          placeholder="What's on your mind?"
+          className="w-full px-5 py-4 rounded-2xl bg-white/[0.05] border border-white/[0.08] text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all duration-200 resize-none"
+          style={{ fontFamily: DISPLAY_SANS, fontSize: "15px" }}
+        />
         {hasSubmitted && errors.message ? (
-          <small className="field-error">{errors.message}</small>
+          <small className="text-[#e05b5b] text-xs mt-0.5">{errors.message}</small>
         ) : null}
       </label>
-      <div className="form-actions">
-        <button type="submit" className="primary-button" disabled={isPending}>
-          {isPending ? "Sending..." : "Send message"}
+
+      {/* Submit row */}
+      <div className="flex flex-wrap items-center gap-4 pt-2">
+        <button
+          type="submit"
+          disabled={isPending}
+          className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] px-8 backdrop-blur-md transition-all duration-300 hover:bg-white/[0.12] hover:border-white/20 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed"
+          style={{ fontFamily: DISPLAY_SANS }}
+        >
+          <span className="relative flex items-center gap-2.5 text-white/90 group-hover:text-white transition-colors text-[15px] font-medium">
+            {isPending ? "Sending…" : "Send message"}
+            {!isPending && (
+              <svg className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            )}
+          </span>
         </button>
+
         {status ? (
-          <p className={`form-status form-status-${status.tone}`}>{status.message}</p>
+          <p
+            className={`text-[13px] px-4 py-2 rounded-full ${
+              status.tone === "success"
+                ? "text-[#77CE90] bg-[#77CE90]/10 border border-[#77CE90]/15"
+                : "text-[#e05b5b] bg-[#e05b5b]/10 border border-[#e05b5b]/15"
+            }`}
+            style={{ fontFamily: DISPLAY_SANS }}
+          >
+            {status.message}
+          </p>
         ) : null}
       </div>
     </form>
