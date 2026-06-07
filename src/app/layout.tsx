@@ -1,8 +1,5 @@
-import "./globals.css";
 
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
-import { getContactDetails } from "@/lib/content";
+
 
 export const metadata = {
   metadataBase: new URL("https://www.djunicode.in"),
@@ -14,17 +11,11 @@ export const metadata = {
     "Official site for Unicode, the student coding club of Dwarkadas J. Sanghvi College of Engineering.",
 };
 
-export default function RootLayout({ children }) {
-  const contact = getContactDetails();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <div className="page-frame">
-          <Navbar />
-          <main>{children}</main>
-          <Footer contact={contact} />
-        </div>
+        {children}
       </body>
     </html>
   );

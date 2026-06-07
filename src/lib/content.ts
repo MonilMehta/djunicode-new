@@ -27,7 +27,11 @@ function readCollection(relativeDir) {
   return getFiles(directory)
     .map((absPath) => path.relative(dataRoot, absPath))
     .sort((left, right) => left.localeCompare(right))
-    .map((relativePath) => readJson(relativePath));
+    .map((relativePath) => {
+      const data = readJson(relativePath);
+      data._slug = path.basename(relativePath, ".json");
+      return data;
+    });
 }
 
 function toAssetPath(value) {
@@ -71,8 +75,8 @@ function getProfileMap() {
   }
 
   profileMapCache = new Map(
-    readJson(path.join("profile", "profile.json")).map((profile) => [
-      profile.key,
+    readCollection("members").map((profile) => [
+      profile._slug,
       {
         ...profile,
         github: profile.GitHub,
