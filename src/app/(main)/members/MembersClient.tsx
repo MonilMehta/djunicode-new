@@ -195,7 +195,7 @@ export default function MembersClient({ membersData }: { membersData: any[] }) {
                   
                   {/* Image */}
                   <img
-                    src={member.profile_pic ? member.profile_pic.replace('../../', '/') : ''}
+                    src={member.profile_pic || ''}
                     alt={member.name}
                     className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}

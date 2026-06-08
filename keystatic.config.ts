@@ -1,6 +1,9 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection, singleton } from '@keystatic/core';
 
 export default config({
+  ui: {
+    brand: { name: 'Unicode CMS' },
+  },
   storage: {
     kind: 'local',
   },
@@ -119,6 +122,19 @@ export default config({
           TEmentors: fields.array(fields.relationship({ label: 'Mentor', collection: 'members' }), { label: 'TE Mentors', itemLabel: props => props.value || 'Mentor' }),
           SEmentees: fields.array(fields.relationship({ label: 'Mentee', collection: 'members' }), { label: 'SE Mentees', itemLabel: props => props.value || 'Mentee' }),
         }, { label: 'Contributors' }),
+      },
+    }),
+  },
+  singletons: {
+    settings: singleton({
+      label: 'Settings',
+      path: 'content/data/settings',
+      format: 'json',
+      schema: {
+        newPassword: fields.text({
+          label: 'New Dashboard Password',
+          description: 'Type a new password here and save. Then visit /api/keystatic/rotate-password to apply it. Leave blank to keep the current password.',
+        }),
       },
     }),
   },
