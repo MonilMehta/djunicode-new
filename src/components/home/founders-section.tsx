@@ -148,7 +148,7 @@ export function FoundersSection({ founders }: { founders: Founder[] }) {
     });
 
     return (
-        <section className="bg-[#050505] relative pb-32">
+        <section className="bg-[#050505] relative pb-32 founders-section">
             <div
                 ref={containerRef}
                 className="relative w-full"

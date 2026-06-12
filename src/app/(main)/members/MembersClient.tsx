@@ -75,7 +75,7 @@ export default function MembersClient({ membersData }: { membersData: any[] }) {
   };
 
   return (
-    <div className={`min-h-screen bg-[#080808] text-[#e0e0e0] flex flex-col ${spaceMono.className}`}>
+    <div className={`min-h-screen bg-[#080808] text-[#e0e0e0] flex flex-col members-page-root ${spaceMono.className}`}>
       
       {/* PREMIUM HERO SECTION */}
       <section className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 px-6 md:px-[52px] overflow-hidden">

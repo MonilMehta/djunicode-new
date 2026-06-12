@@ -51,10 +51,10 @@ export function HorizontalNarrativeScroll() {
     });
 
     // ── Phase 1 (0 → 0.40): readme.md colour highlights ──────────────────────
-    const c1 = useTransform(scrollYProgress, [0.05, 0.18], ["rgba(255,255,255,0.35)", "#FF6B6B"]);
-    const c2 = useTransform(scrollYProgress, [0.18, 0.28], ["rgba(255,255,255,0.35)", "#38BDF8"]);
-    const c3 = useTransform(scrollYProgress, [0.28, 0.36], ["rgba(255,255,255,0.35)", "#34D399"]);
-    const c4 = useTransform(scrollYProgress, [0.36, 0.44], ["rgba(255,255,255,0.35)", "#F59E0B"]);
+    const c1 = useTransform(scrollYProgress, [0.05, 0.18], ["rgba(15,24,36,0.35)", "#FF6B6B"]);
+    const c2 = useTransform(scrollYProgress, [0.18, 0.28], ["rgba(15,24,36,0.35)", "#38BDF8"]);
+    const c3 = useTransform(scrollYProgress, [0.28, 0.36], ["rgba(15,24,36,0.35)", "#34D399"]);
+    const c4 = useTransform(scrollYProgress, [0.36, 0.44], ["rgba(15,24,36,0.35)", "#F59E0B"]);
 
     // ── Phase 1.5: Image stacked animations ──────────────────────
     const img1Y = useTransform(scrollYProgress, [0.05, 0.15], [300, 0]);
@@ -95,7 +95,7 @@ export function HorizontalNarrativeScroll() {
         >
             <div className="sticky top-0 h-screen overflow-hidden">
                 {/* vignette */}
-                <div className="absolute inset-0 z-20 pointer-events-none" style={vignette} />
+                <div className="absolute inset-0 z-20 pointer-events-none narrative-vignette" style={vignette} />
 
                 {/* ── Horizontal strip ─────────────────────────────────────────── */}
                 <motion.div

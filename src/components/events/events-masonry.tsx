@@ -109,7 +109,7 @@ export function EventsMasonry({ events }: { events: Event[] }) {
     });
 
     return (
-        <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-32">
+        <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-32 events-masonry-root">
             <div className="flex gap-6 md:gap-8 lg:gap-12 w-full">
                 {columns.map((colEvents, colIdx) => (
                     <div key={colIdx} className="flex-1 flex flex-col w-full">

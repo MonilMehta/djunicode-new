@@ -717,6 +717,18 @@ body:has(.hero-route-root)::before {
   display: none;
 }
 
+/* ── Light mode: hero section gets cream background (aurora handles it) ── */
+html[data-theme="light"] body.immersive-hero-route,
+html[data-theme="light"] body:has(.hero-route-root) {
+  background: #f7f1e6;
+}
+
+/* ── Dark mode: explicit dark home background ─────────────────────────── */
+html[data-theme="dark"] body:has(.hero-route-root),
+html[data-theme="dark"] body.immersive-hero-route {
+  background: #02030a;
+}
+
 @media (max-width: 960px) {
 
   .hero-grid,
@@ -978,4 +990,534 @@ body:has(.hero-route-root)::before {
   margin: 2rem 0;
   border: 1px solid rgba(255,255,255,0.06);
   max-width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — homepage section overrides
+   All hardcoded dark values (#050505, #0A0A0A, #111, #222, text-white)
+   are flipped here so no component JS needs touching.
+   Scoped to html[data-theme="light"] to stay isolated from dark mode.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared tokens ─────────────────────────────────────────────────────── */
+html[data-theme="light"] {
+  --lm-bg:        #f7f1e6;   /* cream — main section bg              */
+  --lm-surface:   #ede8dc;   /* slightly darker cream — card surface  */
+  --lm-card:      #ffffff;   /* white card face                       */
+  --lm-border:    rgba(23,32,51,0.10);
+  --lm-ink:       #0f1824;   /* near-black heading text               */
+  --lm-ink-soft:  rgba(15,24,36,0.55); /* body / muted text           */
+  --lm-rule:      rgba(15,24,36,0.12);
+  --lm-accent:    #0db6c7;   /* site cyan                             */
+  --lm-green:     #06a96d;   /* richer green (not washed-out)         */
+}
+
+/* ── Section backgrounds ────────────────────────────────────────────────── */
+html[data-theme="light"] #narrative-section,
+html[data-theme="light"] .founders-section,
+html[data-theme="light"] .faculty-section,
+html[data-theme="light"] .events-section,
+html[data-theme="light"] .projects-section {
+  background: var(--lm-bg) !important;
+}
+
+/* ── Sticky inner wrappers that also carry the dark bg ──────────────────── */
+html[data-theme="light"] #narrative-section .sticky,
+html[data-theme="light"] .projects-section .sticky > div:first-child,
+html[data-theme="light"] .projects-section [class*="bg-[#050505]"],
+html[data-theme="light"] .projects-section [class*="bg-[#0A0A0A]"] {
+  background: var(--lm-bg) !important;
+}
+
+/* ── Narrative scroll: vignette changes to cream ───────────────────────── */
+html[data-theme="light"] #narrative-section .narrative-vignette {
+  background: linear-gradient(
+    to bottom,
+    var(--lm-bg) 0%,
+    transparent 18%,
+    transparent 82%,
+    var(--lm-bg) 100%
+  ) !important;
+}
+
+/* ── All white text → near-black ─────────────────────────────────────────── */
+html[data-theme="light"] #narrative-section h2,
+html[data-theme="light"] #narrative-section h3,
+html[data-theme="light"] #narrative-section .text-white,
+html[data-theme="light"] #narrative-section [class*="text-white"],
+html[data-theme="light"] .founders-section h2,
+html[data-theme="light"] .founders-section h3,
+html[data-theme="light"] .founders-section .text-white,
+html[data-theme="light"] .founders-section [class*="text-white"],
+html[data-theme="light"] .faculty-section h2,
+html[data-theme="light"] .faculty-section h3,
+html[data-theme="light"] .faculty-section .text-white,
+html[data-theme="light"] .faculty-section [class*="text-white"],
+html[data-theme="light"] .events-section h2,
+html[data-theme="light"] .events-section h3,
+html[data-theme="light"] .events-section .text-white,
+html[data-theme="light"] .events-section [class*="text-white"],
+html[data-theme="light"] .projects-section h2,
+html[data-theme="light"] .projects-section h3,
+html[data-theme="light"] .projects-section .text-white,
+html[data-theme="light"] .projects-section [class*="text-white"] {
+  color: var(--lm-ink) !important;
+}
+
+/* Muted white (text-white/50, text-white/60, text-white/70) → ink-soft */
+html[data-theme="light"] #narrative-section [class*="text-white/"],
+html[data-theme="light"] .founders-section [class*="text-white/"],
+html[data-theme="light"] .faculty-section  [class*="text-white/"],
+html[data-theme="light"] .events-section   [class*="text-white/"],
+html[data-theme="light"] .projects-section [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+
+/* ── Card surfaces ───────────────────────────────────────────────────────── */
+html[data-theme="light"] .founders-section [class*="bg-[#0A0A0A]"],
+html[data-theme="light"] .founders-section [class*="bg-[#111]"],
+html[data-theme="light"] .founders-section [class*="from-[#111]"],
+html[data-theme="light"] .faculty-section  [class*="bg-[#0A0A0A]"],
+html[data-theme="light"] .faculty-section  [class*="bg-[#111]"],
+html[data-theme="light"] .faculty-section  [class*="from-[#111]"] {
+  background: var(--lm-card) !important;
+  background-image: none !important;
+}
+
+/* Card borders: #222 → light line */
+html[data-theme="light"] .founders-section [class*="border-[#222]"],
+html[data-theme="light"] .faculty-section  [class*="border-[#222]"],
+html[data-theme="light"] .projects-section [class*="border-[#222]"] {
+  border-color: var(--lm-border) !important;
+}
+
+/* Image slot backgrounds inside cards */
+html[data-theme="light"] .founders-section [class*="bg-[#111]"],
+html[data-theme="light"] .faculty-section  [class*="bg-[#111]"] {
+  background: var(--lm-surface) !important;
+}
+
+/* Card vignette gradients — flip to cream */
+html[data-theme="light"] .founders-section [class*="from-[#0A0A0A]"],
+html[data-theme="light"] .founders-section [class*="from-[#050505]"],
+html[data-theme="light"] .faculty-section  [class*="from-[#0A0A0A]"],
+html[data-theme="light"] .faculty-section  [class*="from-[#050505]"] {
+  --tw-gradient-from: var(--lm-card) !important;
+}
+
+/* Card shadow — lighten */
+html[data-theme="light"] .founders-section [class*="shadow-"],
+html[data-theme="light"] .faculty-section  [class*="shadow-"] {
+  box-shadow: 0 8px 32px rgba(23,32,51,0.08) !important;
+}
+
+/* ── Events section ──────────────────────────────────────────────────────── */
+/* Rule lines: bg-white/15 → light border */
+html[data-theme="light"] .events-section [class*="bg-white/"] {
+  background-color: var(--lm-rule) !important;
+}
+/* Pill / view past events button */
+html[data-theme="light"] .events-section a[style*="rgba(255, 255, 255, 0.1)"] {
+  background-color: rgba(23,32,51,0.07) !important;
+  border-color:     rgba(23,32,51,0.18) !important;
+}
+/* Image overlay gradients */
+html[data-theme="light"] .events-section [class*="from-[#050505]"] {
+  --tw-gradient-from: rgba(247,241,230,0.65) !important;
+}
+/* Image card border */
+html[data-theme="light"] .events-section [class*="border-white/"] {
+  border-color: var(--lm-border) !important;
+}
+/* No-image placeholder */
+html[data-theme="light"] .events-section [class*="bg-[#0A0A0A]"] {
+  background: var(--lm-surface) !important;
+}
+/* Mobile pill */
+html[data-theme="light"] .events-section a[style*="rgba(255, 255, 255, 0.12)"] {
+  background-color: rgba(23,32,51,0.07) !important;
+  border-color:     rgba(23,32,51,0.18) !important;
+}
+
+/* ── Projects section ─────────────────────────────────────────────────────── */
+/* Left panel background (left sidebar) */
+html[data-theme="light"] .projects-section [class*="shadow-[0_10px"],
+html[data-theme="light"] .projects-section [class*="shadow-[20px"] {
+  box-shadow: 4px 0 24px rgba(23,32,51,0.06) !important;
+}
+/* Mobile bottom bar */
+html[data-theme="light"] .projects-section [class*="border-t"][class*="border-[#222]"] {
+  border-color: var(--lm-border) !important;
+}
+html[data-theme="light"] .projects-section [class*="bg-[#111]"][class*="border-[#333]"] {
+  background: var(--lm-surface) !important;
+  border-color: var(--lm-border) !important;
+}
+/* "View Archive" button */
+html[data-theme="light"] .projects-section a[class*="bg-white"] {
+  background: var(--lm-ink) !important;
+  color: #f7f1e6 !important;
+}
+html[data-theme="light"] .projects-section a[class*="bg-white"]:hover {
+  background: var(--lm-green) !important;
+}
+/* Project card: border */
+html[data-theme="light"] .projects-section [class*="border-[#222]"] {
+  border-color: var(--lm-border) !important;
+}
+/* Project card hover overlay */
+html[data-theme="light"] .projects-section [class*="bg-black/40"] {
+  background-color: rgba(15,24,36,0.25) !important;
+}
+/* Mobile arrow button */
+html[data-theme="light"] .projects-section [class*="border-[#333]"] {
+  border-color: var(--lm-border) !important;
+}
+/* ── Events: sticky inner container ──────────────────────────────────────── */
+html[data-theme="light"] .events-section .sticky {
+  background: var(--lm-bg) !important;
+}
+
+/* ── Projects: right panel (horizontal scroll area) ──────────────────────── */
+html[data-theme="light"] .projects-section .sticky {
+  background: var(--lm-bg) !important;
+}
+html[data-theme="light"] .projects-section .sticky > div:last-child {
+  background: var(--lm-bg) !important;
+}
+/* Project card images keep their own appearance; just soften the border */
+html[data-theme="light"] .projects-section .rounded-\\[24px\\] {
+  border-color: var(--lm-border) !important;
+  box-shadow: 0 8px 32px rgba(23,32,51,0.08) !important;
+}
+/* Top separator line on sticky panel */
+html[data-theme="light"] .projects-section [class*="shadow-[inset_0_1px"] {
+  box-shadow: inset 0 1px 0 rgba(23,32,51,0.07) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — FOOTER
+═══════════════════════════════════════════════════════════════════════════ */
+/* Outer wrapper */
+html[data-theme="light"] footer,
+html[data-theme="light"] footer + *,
+html[data-theme="light"] .site-footer > div {
+  background: var(--lm-bg) !important;
+}
+/* Inner <footer> card (rounded top corners) */
+html[data-theme="light"] .site-footer footer,
+html[data-theme="light"] footer footer {
+  background: #fff !important;
+  color: var(--lm-ink) !important;
+}
+/* Tagline text */
+html[data-theme="light"] footer p[style*="color: \"#c8c8c8\""],
+html[data-theme="light"] footer p[style*="#c8c8c8"] {
+  color: var(--lm-ink) !important;
+}
+/* Column category labels (#555) */
+html[data-theme="light"] footer span[style*="#555"],
+html[data-theme="light"] footer span[style*="color: rgb(85"] {
+  color: var(--lm-ink-soft) !important;
+}
+/* Footer links (#999) */
+html[data-theme="light"] footer a.footer-link,
+html[data-theme="light"] .footer-link {
+  color: var(--lm-ink) !important;
+}
+/* UNICODE wordmark (#333 → match card bg contrast) */
+html[data-theme="light"] footer span[style*="#333"] {
+  color: rgba(15,24,36,0.10) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — CONTACT PAGE
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] .contact-page-root,
+html[data-theme="light"] [class*="bg-[#080808]"] {
+  background: var(--lm-bg) !important;
+  color: var(--lm-ink) !important;
+}
+/* Card panels: #0d0d0d */
+html[data-theme="light"] [class*="bg-[#0d0d0d]"] {
+  background: #fff !important;
+  border-color: var(--lm-border) !important;
+}
+/* Hero border separator */
+html[data-theme="light"] .contact-page-root [class*="border-white/"] {
+  border-color: var(--lm-border) !important;
+}
+/* Eyebrow text */
+html[data-theme="light"] .contact-page-root [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+html[data-theme="light"] .contact-page-root h1,
+html[data-theme="light"] .contact-page-root [class*="text-white"] {
+  color: var(--lm-ink) !important;
+}
+/* Map vignette shadow */
+html[data-theme="light"] [class*="shadow-[inset_0_0_40px"][class*="0d0d0d"] {
+  box-shadow: inset 0 0 40px 12px rgba(255,255,255,0.85) !important;
+}
+/* Contact form inputs: bg-white/[0.05] → actual light surface */
+html[data-theme="light"] .contact-page-root input,
+html[data-theme="light"] .contact-page-root textarea {
+  background: var(--lm-surface) !important;
+  border-color: var(--lm-border) !important;
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .contact-page-root input::placeholder,
+html[data-theme="light"] .contact-page-root textarea::placeholder {
+  color: var(--lm-ink-soft) !important;
+  opacity: 0.5;
+}
+html[data-theme="light"] .contact-page-root input:focus,
+html[data-theme="light"] .contact-page-root textarea:focus {
+  background: #fff !important;
+  border-color: var(--lm-accent) !important;
+}
+/* Submit button */
+html[data-theme="light"] .contact-page-root button[type="submit"] {
+  background: var(--lm-ink) !important;
+  border-color: transparent !important;
+  color: #f7f1e6 !important;
+}
+html[data-theme="light"] .contact-page-root button[type="submit"]:hover {
+  background: var(--lm-accent) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — EVENTS ARCHIVE PAGE  (/events)
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] main[class*="bg-[#050505]"] {
+  background: var(--lm-bg) !important;
+  color: var(--lm-ink) !important;
+}
+/* Header text on events page */
+html[data-theme="light"] main[class*="bg-[#050505]"] h1,
+html[data-theme="light"] main[class*="bg-[#050505]"] [class*="text-white"] {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] main[class*="bg-[#050505]"] [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+/* Ambient glow blobs — make them cream-tinted */
+html[data-theme="light"] main[class*="bg-[#050505]"] .fixed [class*="bg-[#77CE90]"] {
+  opacity: 0.04 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — ABOUT PAGE
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] [class*="bg-[#080808]"][class*="text-[#e0e0e0]"],
+html[data-theme="light"] div[class*="bg-[#080808]"] {
+  background: var(--lm-bg) !important;
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] div[class*="bg-[#080808]"] h1,
+html[data-theme="light"] div[class*="bg-[#080808]"] [class*="text-white"],
+html[data-theme="light"] div[class*="bg-[#080808]"] [class*="text-\\[rgba"] {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] div[class*="bg-[#080808]"] [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+/* Hero border */
+html[data-theme="light"] div[class*="bg-[#080808]"] [class*="border-[#161616]"] {
+  border-color: var(--lm-border) !important;
+}
+/* "move your cursor" label (text-[#1a1a1a] on dark bg) */
+html[data-theme="light"] div[class*="bg-[#080808]"] [class*="text-[#1a1a1a]"] {
+  color: rgba(15,24,36,0.25) !important;
+}
+/* Dot canvas base colour — already orange/amber, fine on light */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — DETAIL PAGES (events/:slug, projects/:slug)
+   These use the CSS design system classes from globals.css (archive-card,
+   detail-section, etc.) which are inherited from --bg and --ink tokens.
+   The detail page inline dark styles need overriding here.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* Generic dark section wrapper used in detail pages */
+html[data-theme="light"] .detail-hero,
+html[data-theme="light"] .detail-layout,
+html[data-theme="light"] .detail-section {
+  background: transparent !important;
+  color: var(--lm-ink) !important;
+}
+/* Eyebrow labels */
+html[data-theme="light"] .section-eyebrow {
+  color: var(--lm-ink-soft) !important;
+}
+/* Cards in archive / detail */
+html[data-theme="light"] .archive-card {
+  background: #fff !important;
+  border-color: var(--lm-border) !important;
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .archive-card h3,
+html[data-theme="light"] .archive-card p {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .archive-card .card-meta {
+  color: var(--lm-ink-soft) !important;
+}
+html[data-theme="light"] .tag-row span {
+  background: rgba(13,182,199,0.10) !important;
+  color: var(--lm-accent) !important;
+  border-color: rgba(13,182,199,0.20) !important;
+}
+
+/* Contributor cards */
+html[data-theme="light"] .contributor-card {
+  background: #fff !important;
+  border-color: var(--lm-border) !important;
+}
+html[data-theme="light"] .contributor-card h4,
+html[data-theme="light"] .contributor-card p {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .contributor-links a {
+  color: var(--lm-accent) !important;
+}
+html[data-theme="light"] .image-fallback {
+  background: var(--lm-surface) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — PROJECTS SHOWCASE (/projects)
+   projects-showcase.tsx uses lots of inline dark styles
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] .projects-showcase-root {
+  background: var(--lm-bg) !important;
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .projects-showcase-root [class*="text-white"],
+html[data-theme="light"] .projects-showcase-root h1,
+html[data-theme="light"] .projects-showcase-root h2,
+html[data-theme="light"] .projects-showcase-root h3 {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .projects-showcase-root [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#050505]"],
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#0A0A0A]"],
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#0d0d0d]"],
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#111]"] {
+  background: var(--lm-bg) !important;
+}
+html[data-theme="light"] .projects-showcase-root [class*="border-[#222]"],
+html[data-theme="light"] .projects-showcase-root [class*="border-white/"] {
+  border-color: var(--lm-border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — MEMBERS PAGE
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] .members-page-root {
+  background: var(--lm-bg) !important;
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .members-page-root [class*="text-white"],
+html[data-theme="light"] .members-page-root h1,
+html[data-theme="light"] .members-page-root h2,
+html[data-theme="light"] .members-page-root h3 {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .members-page-root [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+html[data-theme="light"] .members-page-root [class*="bg-[#050505]"],
+html[data-theme="light"] .members-page-root [class*="bg-[#0A0A0A]"],
+html[data-theme="light"] .members-page-root [class*="bg-[#111]"] {
+  background: #fff !important;
+}
+html[data-theme="light"] .members-page-root [class*="border-[#222]"],
+html[data-theme="light"] .members-page-root [class*="border-white/"] {
+  border-color: var(--lm-border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — EVENTS MASONRY (events-masonry.tsx)
+═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme="light"] .events-masonry-root {
+  background: transparent !important;
+}
+html[data-theme="light"] .events-masonry-root [class*="text-white"],
+html[data-theme="light"] .events-masonry-root h3 {
+  color: var(--lm-ink) !important;
+}
+html[data-theme="light"] .events-masonry-root [class*="text-white/"] {
+  color: var(--lm-ink-soft) !important;
+}
+html[data-theme="light"] .events-masonry-root [class*="bg-[#0A0A0A]"],
+html[data-theme="light"] .events-masonry-root [class*="bg-[#111]"],
+html[data-theme="light"] .events-masonry-root [class*="border-[#222]"] {
+  background: #fff !important;
+  border-color: var(--lm-border) !important;
+}
+html[data-theme="light"] .events-masonry-root [class*="border-white/"] {
+  border-color: var(--lm-border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — GLOBAL dark-pattern catch-alls
+   Any remaining components that use common dark tokens but aren't
+   specifically listed above — scoped broadly but below everything else.
+═══════════════════════════════════════════════════════════════════════════ */
+/* Glassmorphism buttons: bg-white/[0.06] border-white/10 → light equivalents */
+html[data-theme="light"] [class*="bg-white/"][class*="backdrop-blur"] {
+  background: rgba(15,24,36,0.06) !important;
+  border-color: rgba(15,24,36,0.14) !important;
+}
+html[data-theme="light"] [class*="bg-white/"][class*="backdrop-blur"] span,
+html[data-theme="light"] [class*="bg-white/"][class*="backdrop-blur"] svg {
+  color: var(--lm-ink) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — Shadows & Translucent elements cleanup
+   Removes "dark things below the borders" in light mode
+═══════════════════════════════════════════════════════════════════════════ */
+/* Projects and Events massive dark shadows → soft light shadows */
+html[data-theme="light"] .projects-showcase-root [class*="shadow-[0_0_30px"],
+html[data-theme="light"] .projects-showcase-root [class*="shadow-2xl"],
+html[data-theme="light"] .events-masonry-root [class*="shadow-[0_20px_40px"] {
+  box-shadow: 0 10px 40px rgba(15, 24, 36, 0.08) !important;
+}
+
+/* Projects sticky pill dark translucent bg → light translucent bg */
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#0a0a0a]/90"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Projects small pill dark bg */
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#0a0a0a]"][class*="hover:bg-[#141414]"] {
+  background: #fff !important;
+}
+html[data-theme="light"] .projects-showcase-root [class*="bg-[#0a0a0a]"][class*="hover:bg-[#141414]"]:hover {
+  background: var(--lm-surface) !important;
+}
+
+/* Members inner card borders and gradients */
+html[data-theme="light"] .members-page-root [class*="shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"] {
+  box-shadow: 0 4px 16px rgba(15, 24, 36, 0.05), inset 0 0 0 1px rgba(15, 24, 36, 0.05) !important;
+}
+html[data-theme="light"] .members-page-root [class*="shadow-[inset_0_1px_0_rgba(255,255,255,0.05)"] {
+  box-shadow: 0 2px 8px rgba(15, 24, 36, 0.04) !important;
+}
+html[data-theme="light"] .members-page-root [class*="from-black/80"] {
+  --tw-gradient-from: rgba(15, 24, 36, 0.6) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRELOADER SSR BACKGROUND
+═══════════════════════════════════════════════════════════════════════════ */
+.preloader-bg {
+  background-color: #050505;
+}
+html[data-theme="light"] .preloader-bg {
+  background-color: #f7f1e6 !important;
 }

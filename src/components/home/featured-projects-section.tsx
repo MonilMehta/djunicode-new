@@ -36,7 +36,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
     return (
         <section
             ref={sectionRef}
-            className="bg-[#050505] relative"
+            className="bg-[#050505] relative projects-section"
             // Multiply height by number of projects to give enough scroll distance
             style={{ height: `${(projects.length * 100)}vh` }}
         >

@@ -10,7 +10,7 @@ const DISPLAY_SANS = "'Satoshi','Inter',system-ui,sans-serif";
 
 export function ContactClient({ contact }: { contact: any }) {
   return (
-    <div className="bg-[#080808] text-white w-full min-h-screen">
+    <div className="bg-[#080808] text-white w-full min-h-screen contact-page-root">
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <section className="w-full px-6 md:px-[52px] pt-[120px] md:pt-[140px] pb-14 border-b border-white/[0.05]">

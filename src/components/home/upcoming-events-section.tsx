@@ -182,7 +182,7 @@ export function UpcomingEventsSection({ event }: { event: Event | null }) {
     return (
         <section
             ref={sectionRef}
-            className="bg-[#050505] relative"
+            className="bg-[#050505] relative events-section"
             style={{ height: "340vh" }}
         >
             <div className="sticky top-0 h-screen w-full flex flex-col overflow-hidden">

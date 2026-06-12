@@ -1,6 +1,8 @@
 
 
 
+import { ThemeProvider } from '@/lib/theme-context';
+
 export const metadata = {
   metadataBase: new URL("https://www.djunicode.in"),
   title: {
@@ -15,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

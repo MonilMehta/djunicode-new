@@ -16,7 +16,7 @@ export function FacultySection({ faculty }: { faculty: Faculty[] }) {
     const teacher = faculty[0];
 
     return (
-        <section className="bg-[#050505] relative pt-12 pb-32">
+        <section className="bg-[#050505] relative pt-12 pb-32 faculty-section">
             <div className="w-full px-10 mb-6 text-left">
                 <motion.h2
                     initial={{ opacity: 0, y: -20 }}

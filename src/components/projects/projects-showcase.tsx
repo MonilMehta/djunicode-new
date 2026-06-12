@@ -443,7 +443,7 @@ export function ProjectsShowcase({ projects }: { projects: Project[] }) {
 
   return (
     <LayoutGroup>
-      <div className="w-full bg-[#050505] min-h-screen">
+      <div className="w-full bg-[#050505] min-h-screen projects-showcase-root">
         {/* Header — matching events/members style */}
         <section className="relative w-full px-6 md:px-[52px] pt-32 pb-16 md:pt-40 md:pb-20">
           <h1
