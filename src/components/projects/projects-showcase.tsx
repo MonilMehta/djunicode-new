@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { X, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { Space_Mono } from "next/font/google";
+import { useTheme } from "@/lib/theme-context";
 
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -48,6 +49,7 @@ function parseLinks(links?: string[]) {
 // ── Floating Dock ────────────────────────────────────────────────────────────
 function FloatingDock({ project, onClose }: { project: Project; onClose: () => void }) {
   const { github, live } = useMemo(() => parseLinks(project.links), [project.links]);
+  const { isLight } = useTheme();
 
   return (
     <motion.div
@@ -55,12 +57,12 @@ function FloatingDock({ project, onClose }: { project: Project; onClose: () => v
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 16, scale: 0.95 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-      className="fixed bottom-8 left-1/2 z-[200] -translate-x-1/2 flex items-center gap-1 p-1.5 rounded-2xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/5 shadow-[0_0_30px_rgba(0,0,0,0.8)]"
+      className={`fixed bottom-8 left-1/2 z-[200] -translate-x-1/2 flex items-center gap-1 p-1.5 rounded-2xl backdrop-blur-xl border shadow-[0_0_30px_rgba(0,0,0,0.8)] ${isLight ? 'bg-white/90 border-black/10' : 'bg-[#0a0a0a]/90 border-white/5'}`}
     >
       {/* Esc / Close */}
       <button
         onClick={onClose}
-        className={`flex items-center gap-2 h-10 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors text-xs ${spaceMono.className}`}
+        className={`flex items-center gap-2 h-10 px-4 rounded-xl transition-colors text-xs ${spaceMono.className} ${isLight ? 'bg-black/5 hover:bg-black/10 text-black' : 'bg-white/10 hover:bg-white/20 text-white'}`}
       >
         <X size={13} />
         <span className="hidden sm:inline">ESC</span>
@@ -68,30 +70,30 @@ function FloatingDock({ project, onClose }: { project: Project; onClose: () => v
 
       {github && (
         <>
-          <div className="w-px h-5 bg-white/10" />
+          <div className={`w-px h-5 ${isLight ? 'bg-black/10' : 'bg-white/10'}`} />
           <a
             href={github}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 h-10 px-4 rounded-xl hover:bg-white/10 text-white transition-colors text-xs"
+            className={`flex items-center gap-2 h-10 px-4 rounded-xl transition-colors text-xs ${isLight ? 'hover:bg-black/5 text-black' : 'hover:bg-white/10 text-white'}`}
           >
-            <Github size={15} className="text-white" />
-            <span className={`${spaceMono.className} text-white`}>GitHub</span>
+            <Github size={15} className={isLight ? 'text-black' : 'text-white'} />
+            <span className={`${spaceMono.className} ${isLight ? 'text-black' : 'text-white'}`}>GitHub</span>
           </a>
         </>
       )}
 
       {live && (
         <>
-          <div className="w-px h-5 bg-white/10" />
+          <div className={`w-px h-5 ${isLight ? 'bg-black/10' : 'bg-white/10'}`} />
           <a
             href={live}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 h-10 px-4 rounded-xl hover:bg-white/10 text-white transition-colors text-xs"
+            className={`flex items-center gap-2 h-10 px-4 rounded-xl transition-colors text-xs ${isLight ? 'hover:bg-black/5 text-black' : 'hover:bg-white/10 text-white'}`}
           >
-            <ExternalLink size={15} className="text-white" />
-            <span className={`${spaceMono.className} text-white`}>Live</span>
+            <ExternalLink size={15} className={isLight ? 'text-black' : 'text-white'} />
+            <span className={`${spaceMono.className} ${isLight ? 'text-black' : 'text-white'}`}>Live</span>
           </a>
         </>
       )}
@@ -111,6 +113,7 @@ function ProjectFullScreen({
   onClose: () => void;
 }) {
   const [zoomedImage, setZoomedImage] = useState<number | null>(null);
+  const { isLight } = useTheme();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -125,7 +128,7 @@ function ProjectFullScreen({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="fixed inset-0 z-[100] bg-[#050505] overflow-y-auto"
+        className={`fixed inset-0 z-[100] overflow-y-auto ${isLight ? 'bg-white' : 'bg-[#050505]'}`}
       >
         {/* Hero Image — shared element from card */}
         <motion.div
@@ -143,14 +146,14 @@ function ProjectFullScreen({
               priority
             />
           ) : (
-            <div className="w-full h-full bg-[#111]" />
+            <div className={`w-full h-full ${isLight ? 'bg-black/5' : 'bg-[#111]'}`} />
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#050505]" />
+          <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-transparent ${isLight ? 'to-white' : 'to-[#050505]'}`} />
 
           {project.yearLabel && (
             <motion.div
               layoutId={`card-badge-${project.slug}`}
-              className={`absolute top-6 left-6 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-[#77CE90] text-[10px] uppercase tracking-widest font-semibold ${spaceMono.className}`}
+              className={`absolute top-6 left-6 px-3 py-1.5 rounded-full backdrop-blur-md border text-[10px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/50 border-black/10 text-[#098d9c]' : 'bg-black/50 border-white/10 text-[#77CE90]'}`}
               transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
             >
               {project.yearLabel}
@@ -165,12 +168,12 @@ function ProjectFullScreen({
           transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-4 md:px-8 pb-40 relative z-10"
         >
-          <div className="bg-[#080808] border border-white/5 shadow-2xl rounded-3xl p-6 md:p-12 -mt-24 md:-mt-32 relative overflow-hidden backdrop-blur-xl">
+          <div className={`border shadow-2xl rounded-3xl p-6 md:p-12 -mt-24 md:-mt-32 relative overflow-hidden backdrop-blur-xl ${isLight ? 'bg-white/80 border-black/5' : 'bg-[#080808] border-white/5'}`}>
             {/* Subtle glow effect inside the card */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[#77CE90]/5 blur-[100px] pointer-events-none" />
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 blur-[100px] pointer-events-none ${isLight ? 'bg-[#098d9c]/5' : 'bg-[#77CE90]/5'}`} />
 
             {project.type && project.type.length > 0 && (
-              <p className={`text-white/40 text-[11px] md:text-[12px] uppercase tracking-[0.2em] mb-4 ${spaceMono.className}`}>
+              <p className={`text-[11px] md:text-[12px] uppercase tracking-[0.2em] mb-4 ${spaceMono.className} ${isLight ? 'text-black/40' : 'text-white/40'}`}>
                 {project.type.join(" · ")}
               </p>
             )}
@@ -181,7 +184,7 @@ function ProjectFullScreen({
               <div>
                 <motion.h1
                   layoutId={`card-title-${project.slug}`}
-                  className="text-white font-bold mb-6 leading-tight"
+                  className={`font-bold mb-6 leading-tight ${isLight ? 'text-black' : 'text-white'}`}
                   style={{
                     fontFamily: "'Satoshi','Inter',sans-serif",
                     fontSize: "clamp(2rem, 4vw, 4rem)",
@@ -201,7 +204,7 @@ function ProjectFullScreen({
                           href={link}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-white text-xs font-medium"
+                          className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors text-xs font-medium ${isLight ? 'bg-black/5 border-black/10 hover:bg-black/10 text-black' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
                         >
                           {isGit ? <Github size={14} /> : <ExternalLink size={14} />}
                           {isGit ? "GitHub" : "Live Site"}
@@ -212,22 +215,22 @@ function ProjectFullScreen({
                 )}
               </div>
 
-              <p className="text-white/70 text-base md:text-xl leading-relaxed max-w-2xl">
+              <p className={`text-base md:text-xl leading-relaxed max-w-2xl ${isLight ? 'text-black/70' : 'text-white/70'}`}>
                 {project.desc}
               </p>
 
-              <div className="w-full h-px bg-white/5" />
+              <div className={`w-full h-px ${isLight ? 'bg-black/5' : 'bg-white/5'}`} />
 
               {project.stack && project.stack.length > 0 && (
                 <div>
-                  <p className={`text-white/30 text-[10px] uppercase tracking-[0.2em] mb-12 ${spaceMono.className}`}>
+                  <p className={`text-[10px] uppercase tracking-[0.2em] mb-12 ${spaceMono.className} ${isLight ? 'text-black/30' : 'text-white/30'}`}>
                     Tech Stack
                   </p>
                   <div className="flex flex-wrap gap-2.5">
                     {project.stack.map((tag) => (
                       <span
                         key={tag}
-                        className={`px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 text-white/70 text-[11px] uppercase tracking-wide ${spaceMono.className} hover:bg-white/[0.08] hover:text-white transition-colors cursor-default`}
+                        className={`px-4 py-2 rounded-full border text-[11px] uppercase tracking-wide ${spaceMono.className} transition-colors cursor-default ${isLight ? 'bg-black/[0.03] border-black/10 text-black/70 hover:bg-black/[0.08] hover:text-black' : 'bg-white/[0.03] border-white/10 text-white/70 hover:bg-white/[0.08] hover:text-white'}`}
                       >
                         {tag}
                       </span>
@@ -249,12 +252,12 @@ function ProjectFullScreen({
 
                 return (
                   <>
-                    <div className="w-full h-px bg-white/5" />
+                    <div className={`w-full h-px ${isLight ? 'bg-black/5' : 'bg-white/5'}`} />
                     <div>
-                      <p className={`text-white/30 text-[10px] uppercase tracking-[0.2em] mb-6 ${spaceMono.className}`}>
+                      <p className={`text-[10px] uppercase tracking-[0.2em] mb-6 ${spaceMono.className} ${isLight ? 'text-black/30' : 'text-white/30'}`}>
                         Credits
                       </p>
-                      <div className="flex flex-col border-y border-white/[0.04] divide-y divide-white/[0.04]">
+                      <div className={`flex flex-col border-y divide-y ${isLight ? 'border-black/[0.04] divide-black/[0.04]' : 'border-white/[0.04] divide-white/[0.04]'}`}>
                         {groups.map((group, groupIdx) => (
                           <div
                             key={groupIdx}
@@ -263,7 +266,7 @@ function ProjectFullScreen({
                             <div className="md:w-32 shrink-0 pt-1.5">
                               <p
                                 className={`text-[12px] uppercase tracking-widest ${spaceMono.className}`}
-                                style={{ color: "#ffffff", fontWeight: 700 }}
+                                style={{ color: isLight ? "#000000" : "#ffffff", fontWeight: 700 }}
                               >
                                 {group.label}
                               </p>
@@ -275,16 +278,16 @@ function ProjectFullScreen({
                                   href={person.linkedIn || person.github || "#"}
                                   target={person.linkedIn || person.github ? "_blank" : undefined}
                                   rel={person.linkedIn || person.github ? "noreferrer" : undefined}
-                                  className="flex items-center gap-2.5 bg-[#0a0a0a] border border-white/[0.05] hover:bg-[#141414] hover:border-white/15 transition-all duration-300 p-1.5 pr-4 rounded-full group/person shadow-sm"
+                                  className={`flex items-center gap-2.5 border transition-all duration-300 p-1.5 pr-4 rounded-full group/person shadow-sm ${isLight ? 'bg-[#f4efe3] border-black/[0.05] hover:bg-[#fff8eb] hover:border-black/15' : 'bg-[#0a0a0a] border-white/[0.05] hover:bg-[#141414] hover:border-white/15'}`}
                                 >
-                                  <div className="relative w-7 h-7 rounded-full overflow-hidden bg-[#1f1f1f] flex items-center justify-center border border-white/5">
+                                  <div className={`relative w-7 h-7 rounded-full overflow-hidden flex items-center justify-center border ${isLight ? 'bg-black/5 border-black/5' : 'bg-[#1f1f1f] border-white/5'}`}>
                                     {person.profilePic ? (
                                       <Image src={person.profilePic} alt={person.name} fill className="object-cover" />
                                     ) : (
-                                      <span className="text-white/40 text-[9px] uppercase font-bold">{person.name.charAt(0)}</span>
+                                      <span className={`text-[9px] uppercase font-bold ${isLight ? 'text-black/40' : 'text-white/40'}`}>{person.name.charAt(0)}</span>
                                     )}
                                   </div>
-                                  <span className="text-white/60 group-hover/person:text-white text-[13px] font-medium transition-colors tracking-tight">
+                                  <span className={`text-[13px] font-medium transition-colors tracking-tight ${isLight ? 'text-black/60 group-hover/person:text-black' : 'text-white/60 group-hover/person:text-white'}`}>
                                     {person.name}
                                   </span>
                                 </a>
@@ -300,9 +303,9 @@ function ProjectFullScreen({
 
               {project.gallery && project.gallery.length > 1 && (
                 <>
-                  <div className="w-full h-px bg-white/5" />
+                  <div className={`w-full h-px ${isLight ? 'bg-black/5' : 'bg-white/5'}`} />
                   <div>
-                    <p className={`text-white/30 text-[10px] uppercase tracking-[0.2em] mb-6 ${spaceMono.className}`}>
+                    <p className={`text-[10px] uppercase tracking-[0.2em] mb-6 ${spaceMono.className} ${isLight ? 'text-black/30' : 'text-white/30'}`}>
                       Gallery
                     </p>
                     <motion.div layout className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -314,7 +317,7 @@ function ProjectFullScreen({
                             transition={{ layout: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
                             key={i}
                             onClick={() => setZoomedImage(isZoomed ? null : i)}
-                            className={`relative rounded-xl overflow-hidden border cursor-zoom-${isZoomed ? 'out' : 'in'} group ${isZoomed ? "col-span-full h-[50vh] md:h-[70vh] bg-black/50 border-white/10" : "aspect-video bg-white/5 border-white/5"}`}
+                            className={`relative rounded-xl overflow-hidden border cursor-zoom-${isZoomed ? 'out' : 'in'} group ${isZoomed ? (isLight ? "col-span-full h-[50vh] md:h-[70vh] bg-white/50 border-black/10" : "col-span-full h-[50vh] md:h-[70vh] bg-black/50 border-white/10") : (isLight ? "aspect-video bg-black/5 border-black/5" : "aspect-video bg-white/5 border-white/5")}`}
                           >
                             <Image
                               src={img}
@@ -322,7 +325,7 @@ function ProjectFullScreen({
                               fill
                               className={isZoomed ? "object-contain p-2" : "object-cover transition-transform duration-700 group-hover:scale-105"}
                             />
-                            {!isZoomed && <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />}
+                            {!isZoomed && <div className={`absolute inset-0 transition-colors duration-300 ${isLight ? 'bg-white/0 group-hover:bg-white/20' : 'bg-black/0 group-hover:bg-black/20'}`} />}
                           </motion.div>
                         );
                       })}
@@ -353,10 +356,12 @@ function ProjectCard({
   onClick: () => void;
   isExpanded: boolean;
 }) {
+  const { isLight } = useTheme();
+
   return (
     <motion.div
       onClick={isExpanded ? undefined : onClick}
-      className={`group rounded-2xl overflow-hidden bg-[#0a0a0a] border border-white/5 hover:border-white/15 transition-colors duration-300 w-full h-full flex flex-col ${isExpanded ? "cursor-default" : "cursor-pointer"}`}
+      className={`group rounded-2xl overflow-hidden border transition-colors duration-300 w-full h-full flex flex-col ${isExpanded ? "cursor-default" : "cursor-pointer"} ${isLight ? 'bg-[#f4efe3] border-black/5 hover:border-black/15' : 'bg-[#0a0a0a] border-white/5 hover:border-white/15'}`}
       whileHover={isExpanded ? {} : { y: -5 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -376,17 +381,17 @@ function ProjectCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full bg-[#111] flex items-center justify-center">
-            <span className="text-white/10 text-xs font-mono uppercase">No Image</span>
+          <div className={`w-full h-full flex items-center justify-center ${isLight ? 'bg-black/5' : 'bg-[#111]'}`}>
+            <span className={`text-xs font-mono uppercase ${isLight ? 'text-black/20' : 'text-white/10'}`}>No Image</span>
           </div>
         )}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300 bg-black/50 backdrop-blur-md border border-white/10 rounded-full p-2 text-white">
+        <div className={`absolute top-3 right-3 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-md border rounded-full p-2 ${isLight ? 'bg-white/50 border-black/10 text-black' : 'bg-black/50 border-white/10 text-white'}`}>
           <ArrowUpRight size={14} />
         </div>
         {project.yearLabel && (
           <motion.div
             layoutId={`card-badge-${project.slug}`}
-            className={`absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[#77CE90] text-[9px] uppercase tracking-widest font-semibold ${spaceMono.className}`}
+            className={`absolute top-3 left-3 px-2.5 py-1 rounded-full backdrop-blur-md border text-[9px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/60 border-black/10 text-[#098d9c]' : 'bg-black/60 border-white/10 text-[#77CE90]'}`}
             transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
           >
             {project.yearLabel}
@@ -398,24 +403,24 @@ function ProjectCard({
       <div className="p-4 md:p-5 flex flex-col flex-grow">
         <motion.h3
           layoutId={`card-title-${project.slug}`}
-          className="text-white font-bold text-base mb-1.5 group-hover:text-[#77CE90] transition-colors"
+          className={`font-bold text-base mb-1.5 transition-colors ${isLight ? 'text-black group-hover:text-[#098d9c]' : 'text-white group-hover:text-[#77CE90]'}`}
           style={{ fontFamily: "'Satoshi','Inter',sans-serif", letterSpacing: "-0.02em" }}
           transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
         >
           {project.title}
         </motion.h3>
-        <p className="text-white/40 text-sm line-clamp-2 leading-relaxed mb-4">
+        <p className={`text-sm line-clamp-2 leading-relaxed mb-4 ${isLight ? 'text-black/40' : 'text-white/40'}`}>
           {project.desc}
         </p>
         {project.stack && project.stack.length > 0 && (
           <div className="flex gap-1.5 flex-wrap mt-auto">
             {project.stack.slice(0, 3).map((tag) => (
-              <span key={tag} className={`px-2 py-0.5 rounded-full bg-white/5 text-white/40 text-[9px] uppercase tracking-wide border border-white/5 ${spaceMono.className}`}>
+              <span key={tag} className={`px-2 py-0.5 rounded-full border text-[9px] uppercase tracking-wide ${spaceMono.className} ${isLight ? 'bg-black/5 text-black/40 border-black/5' : 'bg-white/5 text-white/40 border-white/5'}`}>
                 {tag}
               </span>
             ))}
             {project.stack.length > 3 && (
-              <span className={`px-2 py-0.5 rounded-full bg-white/5 text-white/25 text-[9px] border border-white/5 ${spaceMono.className}`}>
+              <span className={`px-2 py-0.5 rounded-full border text-[9px] ${spaceMono.className} ${isLight ? 'bg-black/5 text-black/25 border-black/5' : 'bg-white/5 text-white/25 border-white/5'}`}>
                 +{project.stack.length - 3}
               </span>
             )}
@@ -429,6 +434,7 @@ function ProjectCard({
 // ── Main Showcase ────────────────────────────────────────────────────────────
 export function ProjectsShowcase({ projects }: { projects: Project[] }) {
   const [selected, setSelected] = useState<Project | null>(null);
+  const { isLight } = useTheme();
 
   const handleOpen = useCallback((p: Project) => setSelected(p), []);
   const handleClose = useCallback(() => setSelected(null), []);
@@ -443,11 +449,11 @@ export function ProjectsShowcase({ projects }: { projects: Project[] }) {
 
   return (
     <LayoutGroup>
-      <div className="w-full bg-[#050505] min-h-screen projects-showcase-root">
+      <div className={`w-full min-h-screen projects-showcase-root`} style={{ backgroundColor: isLight ? 'var(--bg)' : '#050505' }}>
         {/* Header — matching events/members style */}
         <section className="relative w-full px-6 md:px-[52px] pt-32 pb-16 md:pt-40 md:pb-20">
           <h1
-            className="text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]"
+            className={`text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}
           >
             our works
           </h1>

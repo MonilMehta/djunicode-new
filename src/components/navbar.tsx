@@ -37,6 +37,31 @@ export function Navbar() {
         };
     }, [isMenuOpen]);
 
+    // Dynamic IST Clock
+    const [time, setTime] = useState<Date | null>(null);
+    useEffect(() => {
+        setTime(new Date());
+        const timer = setInterval(() => {
+            setTime(new Date());
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const dateStr = time ? new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kolkata',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(time).replace(/-/g, '.') : "----.--.--";
+
+    const timeStr = time ? new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    }).format(time) : "--:--:--";
+
     return (
         <>
             {/* Main Navbar */}
@@ -62,15 +87,15 @@ export function Navbar() {
                     <div className={`hidden lg:flex flex-col items-end text-[10px] text-[#9e9e9e] leading-tight text-right tracking-wider transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isScrolled ? '-translate-y-[150%] opacity-0' : 'translate-y-0 opacity-100'}`}>
                         <div className="flex gap-3 justify-end w-full">
                             <span>Based in</span>
-                            <span>2026.03.08</span>
+                            <span className="w-[58px] inline-block tabular-nums">{dateStr}</span>
                         </div>
                         <div className="flex gap-3 justify-end w-full">
                             <span>Mumbai / India</span>
-                            <span>14:02:24</span>
+                            <span className="w-[58px] inline-block tabular-nums">{timeStr}</span>
                         </div>
                         <div className="flex gap-3 justify-end w-full">
                             <span>— IST</span>
-                            <span>GMT+5:30</span>
+                            <span className="w-[58px] inline-block tabular-nums">GMT+5:30</span>
                         </div>
                     </div>
 
@@ -79,7 +104,7 @@ export function Navbar() {
                         onClick={toggleTheme}
                         aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
                         title={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
-                        className="w-10 h-10 rounded-full flex items-center justify-center bg-[#5c5c5c] hover:bg-[#7a7a7a] transition-all duration-300 text-white"
+                        className={`h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 ${isLight ? 'bg-[#e5e0d4] hover:bg-[#d5cfc0] text-[#172033]' : 'bg-[#5c5c5c] hover:bg-[#7a7a7a] text-white'}`}
                         style={{ fontSize: '1.1rem', lineHeight: 1 }}
                     >
                         {isLight ? (
@@ -105,7 +130,7 @@ export function Navbar() {
 
                     <button
                         onClick={() => setIsMenuOpen(true)}
-                        className="bg-[#5c5c5c] text-white rounded-full px-5 py-2.5 text-[11px] font-bold tracking-widest hover:bg-[#7a7a7a] transition-colors leading-none"
+                        className={`h-10 rounded-full px-5 text-[11px] font-bold tracking-widest transition-colors flex items-center justify-center ${isLight ? 'bg-[#e5e0d4] text-[#172033] hover:bg-[#d5cfc0]' : 'bg-[#5c5c5c] text-white hover:bg-[#7a7a7a]'}`}
                     >
                         MENU
                     </button>
@@ -114,14 +139,14 @@ export function Navbar() {
 
             {/* Full Screen Menu Overlay */}
             <div
-                className={`fixed inset-0 z-50 bg-[#F4EFE3] text-[#172033] flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMenuOpen ? "translate-y-0" : "translate-y-full"
+                className={`fixed inset-0 z-50 flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${isLight ? 'bg-[#F4EFE3] text-[#172033]' : 'bg-[#050505] text-[#e0e0e0]'} ${isMenuOpen ? "translate-y-0" : "translate-y-full"
                     }`}
             >
                 {/* Menu header with CLOSE button */}
                 <div className="px-6 py-4 flex justify-end items-center h-[88px]">
                     <button
                         onClick={() => setIsMenuOpen(false)}
-                        className="bg-[#172033] text-white rounded-full px-5 py-2.5 text-[11px] font-bold tracking-widest hover:bg-[#47506a] transition-colors leading-none"
+                        className={`rounded-full px-5 py-2.5 text-[11px] font-bold tracking-widest transition-colors leading-none ${isLight ? 'bg-[#172033] text-white hover:bg-[#47506a]' : 'bg-white text-black hover:bg-[#e0e0e0]'}`}
                     >
                         CLOSE
                     </button>
@@ -131,28 +156,28 @@ export function Navbar() {
                 <div className="flex-1 px-8 md:px-16 flex flex-col justify-between relative pb-10 font-['Satoshi','Inter',sans-serif]">
                     {/* The Menu links */}
                     <div className="flex flex-col gap-2 text-[2.5rem] md:text-[4rem] font-medium tracking-tight mt-0">
-                        <Link href="/" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">HOME</span>
                         </Link>
-                        <Link href="/about" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/about" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">ABOUT</span>
                         </Link>
-                        <Link href="/projects" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/projects" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">PROJECTS</span>
                         </Link>
-                        <Link href="/members" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/members" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">MEMBERS</span>
                         </Link>
-                        <Link href="/blog" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/blog" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">BLOG</span>
                         </Link>
-                        <Link href="/contact" className="group relative flex items-center text-[#172033] w-max" onClick={() => setIsMenuOpen(false)}>
-                            <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#172033] opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0" />
+                        <Link href="/contact" className={`group relative flex items-center w-max ${isLight ? 'text-[#172033]' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className={`absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 -translate-x-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 ${isLight ? 'bg-[#172033]' : 'bg-white'}`} />
                             <span className="transition-transform duration-300 ease-out group-hover:translate-x-4">CONTACT</span>
                         </Link>
                     </div>
@@ -163,24 +188,24 @@ export function Navbar() {
                     </div>
 
                     {/* Footer Info */}
-                    <div className="flex justify-between items-end text-[11px] font-normal leading-[1.6] tracking-wide mt-8 border-t border-[#172033]/10 pt-6">
+                    <div className={`flex justify-between items-end text-[11px] font-normal leading-[1.6] tracking-wide mt-8 border-t pt-6 ${isLight ? 'border-[#172033]/10' : 'border-white/10'}`}>
                         <div className="flex flex-col gap-6">
-                            <div className="text-[#172033]">
+                            <div className={isLight ? 'text-[#172033]' : 'text-[#e0e0e0]'}>
                                 <p className="font-semibold">© DJ Unicode</p>
-                                <p className="text-[#47506a]">Based in</p>
-                                <p className="text-[#47506a]">Mumbai / India</p>
+                                <p className={isLight ? 'text-[#47506a]' : 'text-[#9e9e9e]'}>Based in</p>
+                                <p className={isLight ? 'text-[#47506a]' : 'text-[#9e9e9e]'}>Mumbai / India</p>
                             </div>
-                            <div className="text-[#172033]">
-                                <p className="text-[#47506a]">Say Hello</p>
+                            <div className={isLight ? 'text-[#172033]' : 'text-[#e0e0e0]'}>
+                                <p className={isLight ? 'text-[#47506a]' : 'text-[#9e9e9e]'}>Say Hello</p>
                                 <p className="font-semibold">contact@djunicode.in</p>
                             </div>
                         </div>
 
                         <div className="flex flex-col text-left">
-                            <p className="text-[#47506a] mb-2 font-semibold">Social Media</p>
-                            <a href="#" className="font-semibold text-[#172033] hover:text-[#098d9c] transition-colors">Instagram</a>
-                            <a href="#" className="font-semibold text-[#172033] hover:text-[#098d9c] transition-colors">LinkedIn</a>
-                            <a href="#" className="font-semibold text-[#172033] hover:text-[#098d9c] transition-colors">GitHub</a>
+                            <p className={`mb-2 font-semibold ${isLight ? 'text-[#47506a]' : 'text-[#9e9e9e]'}`}>Social Media</p>
+                            <a href="#" className={`font-semibold transition-colors ${isLight ? 'text-[#172033] hover:text-[#098d9c]' : 'text-white hover:text-[#77CE90]'}`}>Instagram</a>
+                            <a href="#" className={`font-semibold transition-colors ${isLight ? 'text-[#172033] hover:text-[#098d9c]' : 'text-white hover:text-[#77CE90]'}`}>LinkedIn</a>
+                            <a href="#" className={`font-semibold transition-colors ${isLight ? 'text-[#172033] hover:text-[#098d9c]' : 'text-white hover:text-[#77CE90]'}`}>GitHub</a>
                         </div>
                     </div>
                 </div>

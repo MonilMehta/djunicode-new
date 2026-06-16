@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import WorldMap from '@/components/ui/world-map';
+import { useTheme } from '@/lib/theme-context';
 
 const ALUMNI = [
   // wave 1 - Core tech hubs & India
@@ -32,6 +33,7 @@ const MUMBAI = [72.88, 19.08, 'Mumbai'];
 export function AlumniMapSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
+  const { isLight } = useTheme();
 
   const [waveIdx, setWaveIdx] = useState(0);
 
@@ -79,16 +81,20 @@ export function AlumniMapSection() {
     >
       <div
         ref={stickyRef}
-        className="sticky top-0 h-[100svh] min-h-[600px] overflow-hidden border-y border-[#111] bg-[#080808]"
+        className={`sticky top-0 h-[100svh] min-h-[600px] overflow-hidden border-y`}
+        style={{
+          backgroundColor: isLight ? "var(--bg)" : "#080808",
+          borderColor: isLight ? "rgba(0,0,0,0.08)" : "#111"
+        }}
       >
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none mt-16 md:mt-24">
           <div className="w-full max-w-7xl mx-auto px-4 opacity-70">
-            <WorldMap dots={mapDots} lineColor="#ffffff" />
+            <WorldMap dots={mapDots} lineColor={isLight ? "#0f1824" : "#ffffff"} />
           </div>
         </div>
 
         <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-[52px] pt-8 md:pt-[48px] pointer-events-none">
-          <h2 className="text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]">
+          <h2 className={`text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}>
             where are we
           </h2>
         </div>

@@ -5,6 +5,7 @@ import { Space_Mono } from "next/font/google";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { useTheme } from "@/lib/theme-context";
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -85,6 +86,7 @@ export function GitlogSection({ embedded = false }: { embedded?: boolean } = {})
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { isLight } = useTheme();
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -132,7 +134,12 @@ export function GitlogSection({ embedded = false }: { embedded?: boolean } = {})
   return (
     <section 
       ref={sectionRef} 
-      className={`relative bg-[#080808] text-[#e0e0e0] overflow-hidden ${embedded ? "h-[80vh]" : "h-screen"} w-full flex items-center border-y border-white/[0.04]`}
+      className={`relative overflow-hidden ${embedded ? "h-[80vh]" : "h-screen"} w-full flex items-center border-y`}
+      style={{
+        backgroundColor: isLight ? "var(--bg)" : "#080808",
+        color: isLight ? "var(--ink)" : "#e0e0e0",
+        borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.04)"
+      }}
     >
       {/* Background Track */}
       <div 
@@ -143,11 +150,12 @@ export function GitlogSection({ embedded = false }: { embedded?: boolean } = {})
         {PRINCIPLES.map((principle) => (
           <div 
             key={principle.num} 
-            className="w-[100vw] h-full flex items-center justify-center relative border-r border-white/[0.02] overflow-hidden"
+            className="w-[100vw] h-full flex items-center justify-center relative overflow-hidden border-r"
+            style={{ borderColor: isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.02)" }}
           >
-             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#77CE90]/10 to-transparent opacity-50" />
+             <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${isLight ? 'via-[#098d9c]/15' : 'via-[#77CE90]/10'} to-transparent opacity-50`} />
              {/* Huge background number */}
-             <div className={`text-[50vw] font-bold text-[#77CE90]/[0.02] ${spaceMono.className} leading-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
+             <div className={`text-[50vw] font-bold ${isLight ? 'text-black/[0.03]' : 'text-[#77CE90]/[0.02]'} ${spaceMono.className} leading-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
                0{principle.num}
              </div>
           </div>
@@ -162,7 +170,7 @@ export function GitlogSection({ embedded = false }: { embedded?: boolean } = {})
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[clamp(40px,8vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]">
+            <h2 className={`text-[clamp(40px,8vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}>
               how we learn.
             </h2>
           </motion.div>
@@ -171,20 +179,20 @@ export function GitlogSection({ embedded = false }: { embedded?: boolean } = {})
 
       {/* Fixed Content that updates with scramble */}
       <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-[52px] right-6 md:right-[52px] z-10 pointer-events-none mt-[10vh]">
-        <div className="max-w-4xl pointer-events-auto bg-[#080808]/40 backdrop-blur-md p-8 md:p-12 rounded-[32px] border border-white/[0.04]">
-          <div className={`text-[12px] md:text-[14px] uppercase tracking-[0.2em] text-[#77CE90] mb-6 md:mb-10 ${spaceMono.className}`}>
+        <div className={`max-w-4xl pointer-events-auto backdrop-blur-md p-8 md:p-12 rounded-[32px] border ${isLight ? 'bg-white/50 border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.02)]' : 'bg-[#080808]/40 border-white/[0.04]'}`}>
+          <div className={`text-[12px] md:text-[14px] uppercase tracking-[0.2em] mb-6 md:mb-10 ${spaceMono.className} ${isLight ? 'text-[#098d9c]' : 'text-[#77CE90]'}`}>
             <ScrambleText text={`0${activePrinciple.num}`} />
           </div>
           
           <h3
-            className="text-[28px] md:text-[52px] font-medium tracking-[-0.03em] leading-[1.1] text-white/90 mb-6 md:mb-8 min-h-[2.2em] md:min-h-[1.1em]"
+            className={`text-[28px] md:text-[52px] font-medium tracking-[-0.03em] leading-[1.1] mb-6 md:mb-8 min-h-[2.2em] md:min-h-[1.1em] ${isLight ? 'text-black/90' : 'text-white/90'}`}
             style={{ fontFamily: DISPLAY_SANS }}
           >
             <ScrambleText text={activePrinciple.title} />
           </h3>
           
           <p
-            className="text-[16px] md:text-[20px] leading-[1.6] text-white/40 min-h-[4.8em] md:min-h-[3.2em]"
+            className={`text-[16px] md:text-[20px] leading-[1.6] min-h-[4.8em] md:min-h-[3.2em] ${isLight ? 'text-[rgba(23,32,51,0.6)]' : 'text-white/40'}`}
             style={{ fontFamily: DISPLAY_SANS }}
           >
             <ScrambleText text={activePrinciple.text} />

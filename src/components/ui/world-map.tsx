@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import DottedMap from "dotted-map";
-
-import { useTheme } from "next-themes";
+import { useTheme } from "@/lib/theme-context";
 
 interface MapProps {
   dots?: Array<{
@@ -21,11 +20,11 @@ export default function WorldMap({
   const svgRef = useRef<SVGSVGElement>(null);
   const map = new DottedMap({ height: 100, grid: "diagonal" });
 
-  const { theme } = useTheme();
+  const { isLight } = useTheme();
 
   const svgMap = map.getSVG({
     radius: 0.22,
-    color: "#FFFFFF40",
+    color: isLight ? "#00000040" : "#FFFFFF40",
     shape: "circle",
     backgroundColor: "transparent",
   });
@@ -45,11 +44,11 @@ export default function WorldMap({
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   };
 
-  console.log("Rendering WorldMap dots length:", dots.length); return (
+  return (
     <div className="w-full aspect-[2/1] bg-transparent rounded-lg relative font-sans">
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none"
+        className={`h-full w-full pointer-events-none select-none ${isLight ? '[mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]' : '[mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)]'}`}
         alt="world map"
         height="495"
         width="1056"
@@ -63,7 +62,7 @@ export default function WorldMap({
         {dots.map((dot, i) => {
           const startPoint = projectPoint(dot.start.lat, dot.start.lng);
           const endPoint = projectPoint(dot.end.lat, dot.end.lng);
-          console.log("Rendering WorldMap dots length:", dots.length); return (
+          return (
             <g key={`path-group-${i}`}>
               <motion.path
                 d={createCurvedPath(startPoint, endPoint)}
@@ -89,10 +88,10 @@ export default function WorldMap({
 
         <defs>
           <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="white" stopOpacity="0" />
+            <stop offset="0%" stopColor={isLight ? "black" : "white"} stopOpacity="0" />
             <stop offset="5%" stopColor={lineColor} stopOpacity="1" />
             <stop offset="95%" stopColor={lineColor} stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
+            <stop offset="100%" stopColor={isLight ? "black" : "white"} stopOpacity="0" />
           </linearGradient>
         </defs>
 

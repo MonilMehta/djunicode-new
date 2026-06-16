@@ -14,12 +14,12 @@ export function HeroSection() {
         <section className="relative w-full h-screen overflow-hidden bg-[#050505]">
             {/* Cross-fade between shaders */}
             <div
+                className={isLight ? "pointer-events-none" : "max-md:pointer-events-none"}
                 style={{
                     position: 'absolute',
                     inset: 0,
                     opacity: isLight ? 0 : 1,
                     transition: 'opacity 0.9s cubic-bezier(0.4,0,0.2,1)',
-                    pointerEvents: isLight ? 'none' : 'auto',
                 }}
             >
                 <PrismClientWrapper />

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { GitlogSection } from "./components/gitlog-section";
 import { AlumniMapSection } from "./components/alumni-map-section";
 import { DirectoryCtaSection } from "./components/directory-cta-section";
+import { useTheme } from "@/lib/theme-context";
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ const staggerCards = {
 
 export default function AboutPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { isLight } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -214,7 +216,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className={`bg-[#080808] text-[#e0e0e0] w-full min-h-screen ${spaceMono.className}`}>
+    <div className={`w-full min-h-screen ${spaceMono.className}`} style={{ backgroundColor: isLight ? "var(--bg)" : "#080808", color: isLight ? "var(--ink)" : "#e0e0e0" }}>
       <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(14px); }
@@ -226,7 +228,7 @@ export default function AboutPage() {
       `}</style>
 
       {/* HERO SECTION */}
-      <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden border-b border-[#161616] flex flex-col">
+      <section className={`relative w-full h-[100svh] min-h-[600px] overflow-hidden border-b flex flex-col ${isLight ? 'border-black/10' : 'border-[#161616]'}`}>
         <canvas
           ref={canvasRef}
           id="c"
@@ -234,7 +236,7 @@ export default function AboutPage() {
         />
 
         <div className="relative z-10 pt-[52px] px-[52px] pointer-events-none animate-fadeUp">
-          <h1 className="text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] text-[rgba(255,255,255,0.82)]">
+          <h1 className={`text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}>
             about us
           </h1>
         </div>
@@ -244,20 +246,20 @@ export default function AboutPage() {
           style={{ animationDelay: "0.2s" }}
         >
           <div className="flex flex-col gap-4 md:gap-6">
-            <h3 className="text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] text-white/40 tracking-[-0.02em]" style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
-              The best way to learn to code is to <span className="text-white/90">ship something real.</span>
+            <h3 className={`text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] tracking-[-0.02em] ${isLight ? 'text-[rgba(23,32,51,0.5)]' : 'text-white/40'}`} style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
+              The best way to learn to code is to <span className={isLight ? 'text-black/90' : 'text-white/90'}>ship something real.</span>
             </h3>
-            <h3 className="text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] text-white/40 tracking-[-0.02em]" style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
-              The best way to master it is to <span className="text-white/90">explain it to someone else.</span>
+            <h3 className={`text-[clamp(20px,3vw,36px)] font-medium leading-[1.15] tracking-[-0.02em] ${isLight ? 'text-[rgba(23,32,51,0.5)]' : 'text-white/40'}`} style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
+              The best way to master it is to <span className={isLight ? 'text-black/90' : 'text-white/90'}>explain it to someone else.</span>
             </h3>
-            <p className={`text-[12px] md:text-[14px] uppercase tracking-[0.2em] text-[#77CE90] mt-4 md:mt-6 ${spaceMono.className}`}>
+            <p className={`text-[12px] md:text-[14px] uppercase tracking-[0.2em] mt-4 md:mt-6 ${isLight ? 'text-[#098d9c]' : 'text-[#77CE90]'} ${spaceMono.className}`}>
               That&apos;s the whole thing, really.
             </p>
           </div>
         </div>
 
         <p 
-          className="absolute bottom-[28px] right-[52px] text-[8px] tracking-[0.35em] uppercase text-[#1a1a1a] pointer-events-none z-10 animate-fadeUp" 
+          className={`absolute bottom-[28px] right-[52px] text-[8px] tracking-[0.35em] uppercase pointer-events-none z-10 animate-fadeUp ${isLight ? 'text-black/20' : 'text-[#1a1a1a]'}`} 
           style={{ animationDelay: "0.8s" }}
         >
           move your cursor
