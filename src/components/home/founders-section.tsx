@@ -41,12 +41,12 @@ function FounderCard({
         >
             {/* The title sits inside the FIRST card's sticky layer so it scrolls out naturally */}
             {index === 0 && (
-                <div className="absolute top-8 left-10 text-left pointer-events-none">
+                <div className="absolute top-4 md:top-8 left-6 md:left-10 text-left pointer-events-none">
                     <h2
                         className="text-white"
                         style={{
                             fontFamily: "'Satoshi','Inter',sans-serif",
-                            fontSize: "clamp(3.5rem, 8vw, 6.5rem)",
+                            fontSize: "clamp(2rem, 8vw, 6.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.05,
                             letterSpacing: "-0.03em",
@@ -58,22 +58,37 @@ function FounderCard({
             )}
 
             <div
-                className="w-full max-w-6xl bg-[#0A0A0A] border border-[#222] rounded-[32px] overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
+                className="w-full max-w-6xl bg-[#0A0A0A] border border-[#222] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row h-[75vh] md:h-[70vh]"
                 style={{
-                    height: "70vh",
-                    marginTop: index === 0 ? "14vh" : "0",
+                    marginTop: index === 0 ? "10vh" : "0",
                 }}
             >
-                {/* Left: Text & Quote */}
-                <div className="flex-1 p-10 md:p-14 flex flex-col justify-center relative bg-gradient-to-br from-[#111] to-[#050505] border-b md:border-b-0 md:border-r border-[#222]">
-                    <span className="text-[#77CE90] font-mono text-sm tracking-widest uppercase mb-6 block">
+                {/* Image (Mobile Only - Top) */}
+                <div className="w-full h-[35%] md:hidden relative shrink-0 bg-[#111]">
+                    {founder.pic ? (
+                        <Image
+                            src={founder.pic}
+                            alt={founder.name}
+                            fill
+                            className="object-cover object-center"
+                            sizes="(max-width: 768px) 100vw, 42vw"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-[#1A1A1A] animate-pulse" />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0A0A0A] to-transparent pointer-events-none" />
+                </div>
+
+                {/* Text & Quote */}
+                <div className="flex-1 p-6 md:p-14 flex flex-col justify-center relative bg-gradient-to-br from-[#111] to-[#050505] border-t md:border-t-0 md:border-r border-[#222] overflow-y-auto md:overflow-visible">
+                    <span className="text-[#77CE90] font-mono text-xs md:text-sm tracking-widest uppercase mb-4 md:mb-6 block shrink-0">
                         0{index + 1} / FOUNDER
                     </span>
                     <h3
-                        className="mb-4 text-white"
+                        className="mb-3 md:mb-4 text-white shrink-0"
                         style={{
                             fontFamily: "'Satoshi','Inter',sans-serif",
-                            fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                            fontSize: "clamp(2rem, 5vw, 4.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.05,
                             letterSpacing: "-0.03em",
@@ -83,7 +98,7 @@ function FounderCard({
                     </h3>
 
                     {/* Social Links */}
-                    <div className="flex items-center gap-4 mb-6">
+                    <div className="flex items-center gap-4 mb-4 md:mb-6 shrink-0">
                         {founder.github && (
                             <a
                                 href={founder.github}
@@ -93,7 +108,7 @@ function FounderCard({
                                 aria-label={`${founder.name} GitHub`}
                                 style={{ color: "#a371f7" }}
                             >
-                                <Github size={24} color="#a371f7" />
+                                <Github size={20} className="md:w-[24px] md:h-[24px]" color="#a371f7" />
                             </a>
                         )}
                         {founder.linkedin && (
@@ -105,21 +120,21 @@ function FounderCard({
                                 aria-label={`${founder.name} LinkedIn`}
                                 style={{ color: "#0a66c2" }}
                             >
-                                <Linkedin size={24} color="#0a66c2" fill="#0a66c2" />
+                                <Linkedin size={20} className="md:w-[24px] md:h-[24px]" color="#0a66c2" fill="#0a66c2" />
                             </a>
                         )}
                     </div>
 
                     <p
-                        className="text-lg md:text-xl md:leading-[1.7] text-white/70 font-light max-w-2xl"
+                        className="text-base md:text-xl leading-snug md:leading-[1.7] text-white/70 font-light max-w-2xl"
                         style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}
                     >
                         "{founder.text}"
                     </p>
                 </div>
 
-                {/* Right: Image */}
-                <div className="w-full md:w-[42%] h-[40vh] md:h-full relative shrink-0 bg-[#111]">
+                {/* Right: Image (Desktop Only) */}
+                <div className="hidden md:block w-[42%] h-full relative shrink-0 bg-[#111]">
                     {founder.pic ? (
                         <Image
                             src={founder.pic}

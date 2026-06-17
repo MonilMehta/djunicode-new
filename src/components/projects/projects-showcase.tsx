@@ -461,7 +461,7 @@ export function ProjectsShowcase({ projects }: { projects: Project[] }) {
 
         {/* Uniform grid */}
         <section className="px-6 md:px-[52px] pb-32">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-5">
             {projects.map((project) => (
               <ProjectCard
                 key={project.slug}

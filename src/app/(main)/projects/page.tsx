@@ -9,6 +9,8 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <ProjectsShowcase projects={projects} />
+    <main className="bg-background min-h-screen transition-colors duration-300">
+      <ProjectsShowcase projects={projects} />
+    </main>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { ArrowUpRight, CalendarDays } from "lucide-react";
+import { useTheme } from "@/lib/theme-context";
 
 interface Event {
     title: string;
@@ -18,6 +19,7 @@ interface Event {
 function EventCard({ event, index }: { event: Event; index: number }) {
     const cardRef = useRef<HTMLDivElement>(null);
     const coverImage = event.gallery?.[0] ?? null;
+    const { isLight } = useTheme();
 
     // Use intersection observer to trigger animation slightly before scrolling into view
     const isInView = useInView(cardRef, { once: true, margin: "0px 0px -10% 0px" });
@@ -34,11 +36,11 @@ function EventCard({ event, index }: { event: Event; index: number }) {
             className="w-full mb-8 md:mb-12"
         >
             <Link href={`/events/${event.slug}`} className="group block w-full h-full">
-                <div className="w-full h-full flex flex-col bg-[#050505] border border-white/5 hover:border-white/15 rounded-[24px] p-4 md:p-5 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+                <div className={`w-full h-full flex flex-col rounded-[24px] p-4 md:p-5 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${isLight ? 'bg-[#f4efe3] border border-black/5 hover:border-black/15' : 'bg-[#0a0a0a] border border-white/5 hover:border-white/15'}`}>
 
                     {/* Image Container */}
                     <div
-                        className="relative w-full rounded-[16px] overflow-hidden bg-[#111] mb-6"
+                        className={`relative w-full rounded-[16px] overflow-hidden mb-6 ${isLight ? 'bg-black/5' : 'bg-[#111]'}`}
                         style={{ aspectRatio: index % 2 === 0 ? "4/3" : "1/1" }}
                     >
                         {coverImage ? (
@@ -51,7 +53,7 @@ function EventCard({ event, index }: { event: Event; index: number }) {
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                                <CalendarDays size={40} className="text-white/10" />
+                                <CalendarDays size={40} className={isLight ? 'text-black/10' : 'text-white/10'} />
                             </div>
                         )}
 
@@ -64,20 +66,20 @@ function EventCard({ event, index }: { event: Event; index: number }) {
                     {/* Content Container */}
                     <div className="flex flex-col flex-1 px-2 pb-2">
                         <div className="flex items-center gap-3 mb-4">
-                            <span className="inline-flex items-center gap-2 text-[#77CE90] font-mono text-xs tracking-widest uppercase font-semibold">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#77CE90] shadow-[0_0_6px_rgba(119,206,144,0.7)]" />
+                            <span className={`inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase font-semibold ${isLight ? 'text-accent' : 'text-[#77CE90]'}`}>
+                                <span className={`w-1.5 h-1.5 rounded-full shadow-[0_0_6px_rgba(119,206,144,0.7)] ${isLight ? 'bg-accent shadow-accent' : 'bg-[#77CE90]'}`} />
                                 {event.yearLabel}
                             </span>
                         </div>
 
                         <h3
-                            className="text-white text-2xl md:text-3xl font-bold tracking-tight mb-3 group-hover:text-[#77CE90] transition-colors duration-300"
+                            className={`text-2xl md:text-3xl font-bold tracking-tight mb-3 transition-colors duration-300 ${isLight ? 'text-black group-hover:text-accent' : 'text-white group-hover:text-[#77CE90]'}`}
                             style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}
                         >
                             {event.title}
                         </h3>
 
-                        <p className="text-white/50 text-base line-clamp-2 md:line-clamp-3 leading-relaxed">
+                        <p className={`text-base line-clamp-2 md:line-clamp-3 leading-relaxed ${isLight ? 'text-black/60' : 'text-white/50'}`}>
                             {event.description}
                         </p>
                     </div>
@@ -110,7 +112,7 @@ export function EventsMasonry({ events }: { events: Event[] }) {
 
     return (
         <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-32 events-masonry-root">
-            <div className="flex gap-6 md:gap-8 lg:gap-12 w-full">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 w-full">
                 {columns.map((colEvents, colIdx) => (
                     <div key={colIdx} className="flex-1 flex flex-col w-full">
                         {/* 

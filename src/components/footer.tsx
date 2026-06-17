@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer({ contact }: { contact: any }) {
   return (
-    <div style={{ background: "#050505" }}>
+    <div className="w-full site-footer transition-colors duration-300" style={{ background: "#050505" }}>
       <footer style={{ background: "#111", color: "#fff", overflow: "hidden", borderRadius: "32px 32px 0 0" }}>
 
         {/* ── Top: Tagline & Link Columns ──────────────────────────────── */}

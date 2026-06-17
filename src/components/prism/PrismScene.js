@@ -151,9 +151,7 @@ export default function PrismScene() {
             orthographic
             gl={{ antialias: false }}
             camera={{ position: [0, 0, 100], zoom: 70 }}
-            style={{ width: '100%', height: '100%', touchAction: 'none' }}
-            onPointerDown={() => { }} // ensure touch starts capture
-            onPointerMove={() => { }} // let useFrame handle the coordinates, just need to prevent default touch scroll
+            style={{ width: '100%', height: '100%', touchAction: 'auto' }}
         >
             <color attach="background" args={['black']} />
             <Suspense fallback={null}>

@@ -182,7 +182,7 @@ export default function MembersClient({ membersData }: { membersData: any[] }) {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-10"
         >
           <AnimatePresence mode="wait">
             {filteredMembers.map((member) => (
@@ -196,7 +196,7 @@ export default function MembersClient({ membersData }: { membersData: any[] }) {
                 className="group flex flex-col cursor-pointer"
               >
                 {/* Image Container with Spotlight/Glow effect */}
-                <div className={`relative aspect-[4/5] w-full rounded-2xl overflow-hidden mb-4 border ${isLight ? 'bg-black/[0.02] border-black/5 shadow-[inset_0_1px_0_rgba(0,0,0,0.05)]' : 'bg-white/[0.02] border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'}`}>
+                <div className={`relative aspect-[4/5] w-full rounded-2xl overflow-hidden mb-5 border ${isLight ? 'bg-black/[0.02] border-black/5 shadow-[inset_0_1px_0_rgba(0,0,0,0.05)]' : 'bg-white/[0.02] border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'}`}>
                   <div className={`absolute inset-0 bg-gradient-to-t ${isLight ? 'from-white/80' : 'from-black/80'} via-transparent to-transparent opacity-50 group-hover:opacity-20 transition-opacity duration-500 z-10`} />
                   
                   {/* Image */}
@@ -227,7 +227,7 @@ export default function MembersClient({ membersData }: { membersData: any[] }) {
                   <h3 className={`text-[14px] sm:text-[16px] font-bold tracking-tight transition-colors ${isLight ? 'text-black/90 group-hover:text-black' : 'text-white/90 group-hover:text-white'}`} style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}>
                     {member.name}
                   </h3>
-                  <p className={`mt-1.5 text-[11px] leading-[1.5] transition-colors line-clamp-3 max-w-[95%] ${isLight ? 'text-black/40 group-hover:text-black/60' : 'text-white/30 group-hover:text-white/50'}`}>
+                  <p className={`mt-2 text-[12px] leading-[1.5] transition-colors line-clamp-3 max-w-[95%] ${isLight ? 'text-black/50 group-hover:text-black/70' : 'text-white/40 group-hover:text-white/60'}`}>
                     {member.desc || "Contributor"}
                   </p>
                 </div>

@@ -1272,14 +1272,11 @@ html[data-theme="light"] .projects-section [class*="shadow-[inset_0_1px"] {
    LIGHT MODE — FOOTER
 ═══════════════════════════════════════════════════════════════════════════ */
 /* Outer wrapper */
-html[data-theme="light"] footer,
-html[data-theme="light"] footer + *,
-html[data-theme="light"] .site-footer > div {
+html[data-theme="light"] .site-footer {
   background: var(--lm-bg) !important;
 }
 /* Inner <footer> card (rounded top corners) */
-html[data-theme="light"] .site-footer footer,
-html[data-theme="light"] footer footer {
+html[data-theme="light"] .site-footer footer {
   background: #fff !important;
   color: var(--lm-ink) !important;
 }
