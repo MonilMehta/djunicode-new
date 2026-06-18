@@ -105,7 +105,8 @@ export function DirectoryCtaSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto mt-4">
         <h2 className={`text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] mb-12 ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}>
-          Looking for <br className="hidden md:block" />
+          Looking for<br className="hidden md:block" />
+          <span className="md:hidden"> </span>
           <span className={`italic font-medium tracking-tight ${isLight ? 'text-black/40' : 'text-white/40'}`}>someone?</span>
         </h2>
         

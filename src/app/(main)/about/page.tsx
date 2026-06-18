@@ -107,11 +107,19 @@ export default function AboutPage() {
         const oc = off.getContext("2d");
         if (!oc) return;
 
-        const scale = Math.max(W / img.width, H / img.height);
+        let scale = Math.max(W / img.width, H / img.height);
+        
+        if (W < H) {
+          // Exactly fit the width of the screen so 0% of the image is cut off horizontally.
+          // This will create a horizontal band of dots in the middle of the screen.
+          scale = W / img.width;
+        }
+        
         const dw = img.width * scale;
         const dh = img.height * scale;
         const dx = (W - dw) / 2;
         const dy = (H - dh) / 2;
+        
         oc.drawImage(img, dx, dy, dw, dh);
 
         const pxData = oc.getImageData(0, 0, W, H).data;
@@ -235,14 +243,14 @@ export default function AboutPage() {
           className="absolute inset-0 w-full h-full block cursor-crosshair"
         />
 
-        <div className="relative z-10 pt-[52px] px-[52px] pointer-events-none animate-fadeUp">
+        <div className="relative z-10 pt-[100px] md:pt-[52px] px-6 md:px-[52px] pointer-events-none animate-fadeUp">
           <h1 className={`text-[clamp(52px,10vw,140px)] font-bold tracking-[-0.06em] leading-[0.9] ${isLight ? 'text-[rgba(23,32,51,0.92)]' : 'text-[rgba(255,255,255,0.82)]'}`}>
             about us
           </h1>
         </div>
 
         <div 
-          className="relative z-10 mt-auto px-[52px] pb-[64px] pointer-events-none animate-fadeUp max-w-[800px]" 
+          className="relative z-10 mt-auto px-6 md:px-[52px] pb-[40px] md:pb-[64px] pointer-events-none animate-fadeUp max-w-[800px]" 
           style={{ animationDelay: "0.2s" }}
         >
           <div className="flex flex-col gap-4 md:gap-6">
