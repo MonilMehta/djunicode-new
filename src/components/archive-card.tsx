@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function ArchiveCard({ href, title, description, image, meta, tags = [] }) {
   return (
-    <Link href={href} className="archive-card">
+    <Link href={href || "#"} className="archive-card">
       <div className="archive-card-media">
         {image ? <img src={image} alt={title} /> : <div className="image-fallback" />}
       </div>

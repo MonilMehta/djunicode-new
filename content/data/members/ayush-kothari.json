@@ -1,9 +1,10 @@
 {
-	"key": 38,
-	"name": "Ayush Kothari",
-	"email": "aayushkothari11@gmail.com",
-	"profile_pic": "/images/profile/aayushkothari11.jpeg",
-	"desc": "Barca fanboy with side interests in programming.",
-	"GitHub": "https://github.com/aayushkothari11",
-	"LinkedIn": "https://www.linkedin.com/in/aayushkothari11/"
+  "key": 38,
+  "name": "Ayush Kothari",
+  "email": "aayushkothari11@gmail.com",
+  "desc": "Barca fanboy with side interests in programming.",
+  "GitHub": "https://github.com/aayushkothari11",
+  "LinkedIn": "https://www.linkedin.com/in/ayushkothari27/",
+  "location": "San Francisco Bay Area",
+  "company": "Coinbase"
 }

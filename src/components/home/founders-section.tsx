@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import Image from "next/image";
 import { Github, Linkedin } from "lucide-react";
@@ -30,23 +30,34 @@ function FounderCard({
     const endDim = (index + 1) / totalCards;
     const scale = useTransform(scrollYProgress, [startDim, endDim], [1, 0.92]);
 
+    const [isMobile, setIsMobile] = useState(true);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     return (
         <motion.div
-            className="sticky top-0 h-screen w-full flex flex-col items-center justify-center p-6 md:p-10 origin-top"
+            className="sticky top-0 h-[100dvh] w-full flex flex-col items-center justify-center p-6 md:p-10 origin-top"
             style={{
-                top: `calc(${index * 40}px)`,
-                scale,
+                top: `calc(${index * (isMobile ? 20 : 40)}px)`,
+                scale: isMobile ? 1 : scale,
                 zIndex: index + 10,
+                transform: "translateZ(0)",
+                willChange: "transform"
             }}
         >
             {/* The title sits inside the FIRST card's sticky layer so it scrolls out naturally */}
             {index === 0 && (
-                <div className="absolute top-4 md:top-8 left-6 md:left-10 text-left pointer-events-none">
+                <div className="absolute top-8 md:top-8 left-6 md:left-10 text-left pointer-events-none z-50">
                     <h2
-                        className="text-white"
+                        className="text-white drop-shadow-lg"
                         style={{
                             fontFamily: "'Satoshi','Inter',sans-serif",
-                            fontSize: "clamp(2rem, 8vw, 6.5rem)",
+                            fontSize: "clamp(2.5rem, 8vw, 6.5rem)",
                             fontWeight: 700,
                             lineHeight: 1.05,
                             letterSpacing: "-0.03em",
@@ -60,7 +71,7 @@ function FounderCard({
             <div
                 className="w-full max-w-6xl bg-[#0A0A0A] border border-[#222] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row h-[75vh] md:h-[70vh]"
                 style={{
-                    marginTop: index === 0 ? "10vh" : "0",
+                    marginTop: index === 0 ? "12vh" : "0",
                 }}
             >
                 {/* Image (Mobile Only - Top) */}
@@ -101,7 +112,7 @@ function FounderCard({
                     <div className="flex items-center gap-4 mb-4 md:mb-6 shrink-0">
                         {founder.github && (
                             <a
-                                href={founder.github}
+                                href={founder.github || undefined}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="transition-all hover:scale-110"
@@ -113,7 +124,7 @@ function FounderCard({
                         )}
                         {founder.linkedin && (
                             <a
-                                href={founder.linkedin}
+                                href={founder.linkedin || undefined}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="transition-all hover:scale-110"

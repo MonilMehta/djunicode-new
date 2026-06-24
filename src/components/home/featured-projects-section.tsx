@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface Project {
@@ -16,6 +16,14 @@ interface Project {
 
 export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(true); // Default to true to prevent initial lag on mobile
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile(); // Check immediately on mount
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     // Track scroll progress strictly within this section container
     const { scrollYProgress } = useScroll({
@@ -23,11 +31,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
         offset: ["start start", "end end"]
     });
 
-    // We want the projects on the right to scroll horizontally
-    // 0 = right-aligned, -100% = fully scrolled left
-    
     // Removing useSpring entirely for mobile lag issues, using direct scroll progress mapping
-    // This perfectly syncs the translation to the scroll container avoiding physics jank
     const xTransform = useTransform(scrollYProgress, [0, 1], ["0%", "-68%"]);
 
     if (!projects || projects.length === 0) return null;
@@ -36,14 +40,14 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
         <section
             ref={sectionRef}
             className="bg-[#050505] relative projects-section"
-            style={{ 
+            style={isMobile ? undefined : { 
                 height: `${(projects.length * 100)}vh` 
             }}
         >
-            <div className="sticky top-0 h-[100dvh] w-full flex flex-col md:flex-row overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+            <div className={`w-full flex flex-col md:flex-row shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ${isMobile ? 'h-auto relative' : 'sticky top-0 h-[100dvh] overflow-hidden'}`}>
 
                 {/* ── Left Side: Pinned Header ───────────────────────────── */}
-                <div className="w-full md:w-[40%] h-auto md:h-full px-6 md:px-12 pt-8 md:pt-32 pb-6 md:pb-32 flex flex-col justify-between shrink-0 z-30 bg-[#050505] shadow-[0_4px_20px_rgba(0,0,0,0.8)] md:shadow-[20px_0_50px_rgba(0,0,0,0.9)] position-relative" style={{ transform: "translateZ(0)" }}>
+                <div className="w-full md:w-[40%] h-auto md:h-full px-6 md:px-12 pt-8 md:pt-32 pb-6 md:pb-32 flex flex-col justify-between shrink-0 z-30 bg-[#050505] md:shadow-[20px_0_50px_rgba(0,0,0,0.9)] position-relative" style={{ transform: "translateZ(0)" }}>
                     <div>
                         <div className="flex items-center gap-3 mb-4 md:mb-8">
                             <span className="w-2 h-2 rounded-full bg-[#77CE90] shadow-[0_0_8px_rgba(119,206,144,0.6)] animate-pulse" />
@@ -84,10 +88,10 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                 </div>
 
                 {/* ── Right Side: Horizontally Scrolling Cards ───────────── */}
-                <div className="w-full md:w-[60%] h-full flex items-center relative overflow-hidden bg-[#050505]">
+                <div className={`w-full md:w-[60%] flex items-center relative bg-[#050505] ${isMobile ? 'h-auto overflow-x-auto snap-x snap-mandatory pb-8 pt-4 no-scrollbar' : 'h-full overflow-hidden'}`}>
                     <motion.div
                         className="flex items-start md:items-center gap-6 md:gap-16 px-6 md:px-16"
-                        style={{
+                        style={isMobile ? undefined : {
                             x: xTransform,
                             willChange: "transform"
                         }}
@@ -95,7 +99,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                         {projects.map((project, idx) => (
                             <div
                                 key={project.slug}
-                                className="w-[85vw] md:w-[600px] shrink-0 group relative"
+                                className="w-[85vw] md:w-[600px] shrink-0 group relative snap-center"
                             >
                                 <Link href={`/projects/${project.slug}`} className="block w-full h-full">
                                     <div className="w-full aspect-[4/3] rounded-[24px] overflow-hidden relative border border-[#222] md:shadow-[0_20px_40px_rgba(0,0,0,0.5)]" style={{ transform: "translateZ(0)" }}>

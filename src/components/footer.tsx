@@ -68,6 +68,6 @@ function FooterLink({ href, children, external }: { href: string; children: Reac
     </span>
   );
 
-  if (external) return <a href={href} target="_blank" rel="noreferrer" style={style} className="footer-link">{inner}</a>;
-  return <Link href={href} style={style} className="footer-link">{inner}</Link>;
+  if (external) return <a href={href || undefined} target="_blank" rel="noreferrer" style={style} className="footer-link">{inner}</a>;
+  return <Link href={href || null as any} style={style} className="footer-link">{inner}</Link>;
 }

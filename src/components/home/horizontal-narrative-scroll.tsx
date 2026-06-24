@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTheme } from "@/lib/theme-context";
@@ -38,11 +38,8 @@ const ICON_POSITIONS_DESKTOP = Array.from({ length: ICON_COUNT }, (_, i) => {
 });
 
 // Mobile Geometry (Full Circle)
-const R_MOBILE = 160;
+const R_MOBILE = 150;
 const START_DEG_MOBILE = 0;
-// We want an even spread across 360 degrees. 
-// If there are 11 icons, the step is 360 / 11. 
-// The last icon should be at 360 - step, which is 360 * (10 / 11).
 const END_DEG_MOBILE = 360 * ((ICON_COUNT - 1) / ICON_COUNT);
 const ICON_POSITIONS_MOBILE = Array.from({ length: ICON_COUNT }, (_, i) => {
     const t = ICON_COUNT === 1 ? 0 : i / (ICON_COUNT - 1);
@@ -63,6 +60,14 @@ const vignette = {
 export function HorizontalNarrativeScroll() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const { isLight } = useTheme();
+    const [isMobile, setIsMobile] = useState(true);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -90,17 +95,10 @@ export function HorizontalNarrativeScroll() {
     const img4Y = useTransform(scrollYProgress, [0.35, 0.45], [300, 0]);
     const img4Op = useTransform(scrollYProgress, [0.35, 0.45], [0, 1]);
 
-    // To prevent z-index issues and physical overlap occlusion:
-    // we use a slight scale offset so that smaller cards stack up
     const img1Scale = useTransform(scrollYProgress, [0.05, 0.15], [1, 1]);
     const img2Scale = useTransform(scrollYProgress, [0.15, 0.25], [1.2, 1]);
     const img3Scale = useTransform(scrollYProgress, [0.25, 0.35], [1.2, 1]);
     const img4Scale = useTransform(scrollYProgress, [0.35, 0.45], [1.2, 1]);
-
-    // Mobile specific animation: both come together and scale up simultaneously
-    const mobY = useTransform(scrollYProgress, [0.05, 0.25], [150, 0]);
-    const mobOp = useTransform(scrollYProgress, [0.05, 0.25], [0, 1]);
-    const mobScale = useTransform(scrollYProgress, [0.05, 0.25], [0.5, 1]);
 
     const imagesTransforms = [
         { y: img1Y, opacity: img1Op, scale: img1Scale, rotate: -6, left: "0%", top: "0%", zIndex: 1, src: "/images/groupPhotos/celestia2025.png" },
@@ -110,38 +108,30 @@ export function HorizontalNarrativeScroll() {
     ];
 
     // ── Phase 2 (0.40 → 0.56): horizontal pan ─────────────────────────────
-    // Strip shifts left by 1 screen width
     const stripX = useTransform(scrollYProgress, [0.40, 0.56], ["0vw", "-100vw"]);
 
     // ── Phase 3 (0.56 → 0.96): wheel rotates ─────────────────
-    // Desktop: arc rolls in from right (120 -> 0)
     const wheelRotateDesktop = useTransform(scrollYProgress, [0.56, 0.96], [120, 0]);
-    
-    // Mobile: Full circle spins (360 degrees spin while scrolling)
-    const wheelRotateMobile = useTransform(scrollYProgress, [0.56, 0.96], [360, 0]);
-
-    // Each icon counter-rotates to stay upright
     const iconRotateDesktop = useTransform(wheelRotateDesktop, (v) => -v);
-    const iconRotateMobile = useTransform(wheelRotateMobile, (v) => -v);
 
     return (
         <section
             ref={sectionRef}
-            className="relative h-[400vh] md:h-[1000vh] bg-[#050505]"
+            className={`relative bg-[#050505] ${isMobile ? 'h-auto' : 'h-[1000vh]'}`}
             id="narrative-section"
         >
-            <div className="sticky top-0 h-[100dvh] overflow-hidden">
+            <div className={`overflow-hidden ${isMobile ? 'relative h-auto' : 'sticky top-0 h-[100dvh]'}`}>
                 {/* vignette */}
-                <div className="absolute inset-0 z-20 pointer-events-none narrative-vignette" style={vignette} />
+                {!isMobile && <div className="absolute inset-0 z-20 pointer-events-none narrative-vignette" style={vignette} />}
 
-                {/* ── Horizontal strip ─────────────────────────────────────────── */}
+                {/* ── Container ─────────────────────────────────────────── */}
                 <motion.div
-                    style={{ x: stripX }}
-                    className="flex flex-row h-full w-max relative z-10"
+                    style={isMobile ? undefined : { x: stripX }}
+                    className={`relative z-10 flex ${isMobile ? 'flex-col w-full' : 'flex-row h-full w-max'}`}
                 >
 
                     {/* ── Panel 1: README ─────────────────────────────────────── */}
-                    <div className="w-screen h-full shrink-0 flex flex-col justify-start pt-[12vh] pl-6 md:pl-10 relative">
+                    <div className={`shrink-0 flex flex-col justify-start pt-[12vh] pl-6 md:pl-10 relative ${isMobile ? 'w-full min-h-[90vh] pb-32' : 'w-screen h-full'}`}>
                         <div className="max-w-4xl z-10 pr-6">
                             <h2
                                 className="text-white"
@@ -162,20 +152,20 @@ export function HorizontalNarrativeScroll() {
                             >
                                 <p>
                                     DJ Unicode is a{" "}
-                                    <motion.span style={{ color: c1 }} className="font-semibold">
+                                    <motion.span style={isMobile ? { color: "#FF6B6B" } : { color: c1 }} className="font-semibold transition-colors duration-300">
                                         student-run community
                                     </motion.span>{" "}
                                     of developers at Dwarkadas J. Sanghvi College of Engineering, Mumbai.
                                 </p>
                                 <p>
                                     We're a small group of builders exploring{" "}
-                                    <motion.span style={{ color: c2 }} className="font-semibold">software engineering</motion.span>
+                                    <motion.span style={isMobile ? { color: "#38BDF8" } : { color: c2 }} className="font-semibold transition-colors duration-300">software engineering</motion.span>
                                     {" "}through{" "}
-                                    <motion.span style={{ color: c3 }} className="font-semibold">projects, workshops, and collaborative learning</motion.span>.
+                                    <motion.span style={isMobile ? { color: "#34D399" } : { color: c3 }} className="font-semibold transition-colors duration-300">projects, workshops, and collaborative learning</motion.span>.
                                 </p>
                                 <p>
                                     From{" "}
-                                    <motion.span style={{ color: c4 }} className="font-semibold">first commits to full-stack systems</motion.span>,
+                                    <motion.span style={isMobile ? { color: "#F59E0B" } : { color: c4 }} className="font-semibold transition-colors duration-300">first commits to full-stack systems</motion.span>,
                                     {" "}we grow by building together and teaching each other.
                                 </p>
                             </div>
@@ -209,14 +199,9 @@ export function HorizontalNarrativeScroll() {
                             ))}
                         </div>
 
-                        {/* ── Side-by-Side Photos (Mobile) ───────────────────────────── */}
-                        <motion.div 
-                            className="flex md:hidden absolute right-[5%] bottom-[12vh] gap-3 sm:gap-4 z-0 pointer-events-none origin-bottom-right"
-                            style={{
-                                y: mobY,
-                                opacity: mobOp,
-                                scale: mobScale
-                            }}
+                        {/* ── Side-by-Side Photos (Mobile - Native CSS animation) ───────────────────────────── */}
+                        <div 
+                            className="flex md:hidden absolute right-[5%] bottom-10 gap-3 sm:gap-4 z-0 pointer-events-none origin-bottom-right"
                         >
                             {imagesTransforms.slice(0, 2).map((img, idx) => (
                                 <div
@@ -225,7 +210,7 @@ export function HorizontalNarrativeScroll() {
                                         transform: `rotate(${idx === 0 ? -4 : 4}deg)`,
                                         borderColor: isLight ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.1)"
                                     }}
-                                    className="relative w-[140px] h-[100px] sm:w-[180px] sm:h-[130px] rounded-[16px] overflow-hidden border shadow-xl bg-black/50"
+                                    className="relative w-[140px] h-[100px] sm:w-[180px] sm:h-[130px] rounded-[16px] overflow-hidden border shadow-xl bg-black/50 opacity-90"
                                 >
                                     <Image
                                         src={img.src}
@@ -235,14 +220,14 @@ export function HorizontalNarrativeScroll() {
                                     />
                                 </div>
                             ))}
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* ── Panel 2: OUR STACK ──────────────────────────────────── */}
-                    <div className="w-screen h-full shrink-0 relative overflow-visible">
+                    <div className={`shrink-0 relative overflow-hidden ${isMobile ? 'w-full min-h-[80vh] bg-[#050505]' : 'w-screen h-full'}`}>
 
                         {/* Title — top-left, never moves */}
-                        <div className="absolute top-[10vh] left-6 md:left-10 z-30 pr-6">
+                        <div className={`z-30 pr-6 ${isMobile ? 'relative top-10 left-6 mb-32' : 'absolute top-[10vh] left-6 md:left-10'}`}>
                             <motion.h2
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
@@ -319,54 +304,50 @@ export function HorizontalNarrativeScroll() {
                             })}
                         </motion.div>
 
-                        {/* ── MOBILE WHEEL ──────────────────────────────────────────────── */}
-                        <motion.div
-                            className="block md:hidden absolute"
+                        {/* ── MOBILE WHEEL (CSS Animation) ──────────────────────────────────────────────── */}
+                        <div
+                            className="block md:hidden absolute w-[300px] h-[300px]"
                             style={{
                                 left: "50%",
                                 top: "50%",
-                                x: "-50%",
-                                y: "-50%",
-                                rotate: wheelRotateMobile,
-                                transformOrigin: "0px 0px",
+                                transform: "translate(-50%, -50%)",
                             }}
                         >
-                            {ICON_POSITIONS_MOBILE.map((pos, i) => {
-                                const tech = TECH_STACKS[i];
-                                return (
-                                    <motion.div
-                                        key={`mobile-${tech.name}`}
-                                        className="absolute group cursor-pointer"
-                                        style={{
-                                            x: pos.x,
-                                            y: pos.y,
-                                            rotate: iconRotateMobile,
-                                            translateX: "-50%",
-                                            translateY: "-50%",
-                                        }}
-                                    >
-                                        <div className="w-[60px] h-[60px] flex items-center justify-center overflow-hidden drop-shadow-lg group-hover:scale-110 group-hover:drop-shadow-[0_0_16px_rgba(119,206,144,0.4)] transition-all duration-300">
-                                            {tech.placeholder ? (
-                                                <span className="text-white/80 font-mono font-bold text-xl select-none">
-                                                    {tech.name === "Next.js" ? "▲" : "~"}
-                                                </span>
-                                            ) : (
-                                                <Image
-                                                    src={tech.logo}
-                                                    alt={tech.name}
-                                                    width={40}
-                                                    height={40}
-                                                    className="w-[70%] h-[70%] object-contain"
-                                                />
-                                            )}
+                            <div className="relative w-full h-full animate-[spin_40s_linear_infinite]">
+                                {ICON_POSITIONS_MOBILE.map((pos, i) => {
+                                    const tech = TECH_STACKS[i];
+                                    return (
+                                        <div
+                                            key={`mobile-${tech.name}`}
+                                            className="absolute"
+                                            style={{
+                                                left: "50%",
+                                                top: "50%",
+                                                transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
+                                            }}
+                                        >
+                                            <div className="animate-[spin_40s_linear_infinite_reverse] flex flex-col items-center">
+                                                <div className="w-[50px] h-[50px] flex items-center justify-center overflow-hidden drop-shadow-lg">
+                                                    {tech.placeholder ? (
+                                                        <span className="text-white/80 font-mono font-bold text-xl select-none">
+                                                            {tech.name === "Next.js" ? "▲" : "~"}
+                                                        </span>
+                                                    ) : (
+                                                        <Image
+                                                            src={tech.logo}
+                                                            alt={tech.name}
+                                                            width={36}
+                                                            height={36}
+                                                            className="w-[70%] h-[70%] object-contain"
+                                                        />
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p className="mt-2 text-center text-white/70 text-[12px] font-medium tracking-wide group-hover:text-[#77CE90] transition-colors whitespace-nowrap drop-shadow-md">
-                                            {tech.name}
-                                        </p>
-                                    </motion.div>
-                                );
-                            })}
-                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
 
                     </div>
                 </motion.div>

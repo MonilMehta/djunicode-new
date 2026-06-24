@@ -57,7 +57,7 @@ function FloatingDock({ project, onClose }: { project: Project; onClose: () => v
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 16, scale: 0.95 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-      className={`fixed bottom-8 left-1/2 z-[200] -translate-x-1/2 flex items-center gap-1 p-1.5 rounded-2xl backdrop-blur-xl border shadow-[0_0_30px_rgba(0,0,0,0.8)] ${isLight ? 'bg-white/90 border-black/10' : 'bg-[#0a0a0a]/90 border-white/5'}`}
+      className={`fixed bottom-8 left-1/2 z-[200] -translate-x-1/2 flex items-center gap-1 p-1.5 rounded-2xl md:backdrop-blur-xl max-md:backdrop-blur-none border shadow-[0_0_30px_rgba(0,0,0,0.8)] ${isLight ? 'bg-white/90 max-md:bg-white border-black/10' : 'bg-[#0a0a0a]/90 max-md:bg-[#0a0a0a] border-white/5'}`}
     >
       {/* Esc / Close */}
       <button
@@ -72,7 +72,7 @@ function FloatingDock({ project, onClose }: { project: Project; onClose: () => v
         <>
           <div className={`w-px h-5 ${isLight ? 'bg-black/10' : 'bg-white/10'}`} />
           <a
-            href={github}
+            href={github || undefined}
             target="_blank"
             rel="noreferrer"
             className={`flex items-center gap-2 h-10 px-4 rounded-xl transition-colors text-xs ${isLight ? 'hover:bg-black/5 text-black' : 'hover:bg-white/10 text-white'}`}
@@ -87,7 +87,7 @@ function FloatingDock({ project, onClose }: { project: Project; onClose: () => v
         <>
           <div className={`w-px h-5 ${isLight ? 'bg-black/10' : 'bg-white/10'}`} />
           <a
-            href={live}
+            href={live || undefined}
             target="_blank"
             rel="noreferrer"
             className={`flex items-center gap-2 h-10 px-4 rounded-xl transition-colors text-xs ${isLight ? 'hover:bg-black/5 text-black' : 'hover:bg-white/10 text-white'}`}
@@ -153,7 +153,7 @@ function ProjectFullScreen({
           {project.yearLabel && (
             <motion.div
               layoutId={`card-badge-${project.slug}`}
-              className={`absolute top-6 left-6 px-3 py-1.5 rounded-full backdrop-blur-md border text-[10px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/50 border-black/10 text-[#098d9c]' : 'bg-black/50 border-white/10 text-[#77CE90]'}`}
+              className={`absolute top-6 left-6 px-3 py-1.5 rounded-full md:backdrop-blur-md max-md:backdrop-blur-none border text-[10px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/50 max-md:bg-white border-black/10 text-[#098d9c]' : 'bg-black/50 max-md:bg-black border-white/10 text-[#77CE90]'}`}
               transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
             >
               {project.yearLabel}
@@ -168,9 +168,9 @@ function ProjectFullScreen({
           transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-4 md:px-8 pb-40 relative z-10"
         >
-          <div className={`border shadow-2xl rounded-3xl p-6 md:p-12 -mt-24 md:-mt-32 relative overflow-hidden backdrop-blur-xl ${isLight ? 'bg-white/80 border-black/5' : 'bg-[#080808] border-white/5'}`}>
+          <div className={`border shadow-2xl rounded-3xl p-6 md:p-12 -mt-24 md:-mt-32 relative overflow-hidden md:backdrop-blur-xl max-md:backdrop-blur-none ${isLight ? 'bg-white/80 max-md:bg-white border-black/5' : 'bg-[#080808]/80 max-md:bg-[#080808] border-white/5'}`}>
             {/* Subtle glow effect inside the card */}
-            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 blur-[100px] pointer-events-none ${isLight ? 'bg-[#098d9c]/5' : 'bg-[#77CE90]/5'}`} />
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 md:blur-[100px] max-md:blur-[40px] pointer-events-none ${isLight ? 'bg-[#098d9c]/5' : 'bg-[#77CE90]/5'}`} />
 
             {project.type && project.type.length > 0 && (
               <p className={`text-[11px] md:text-[12px] uppercase tracking-[0.2em] mb-4 ${spaceMono.className} ${isLight ? 'text-black/40' : 'text-white/40'}`}>
@@ -201,7 +201,7 @@ function ProjectFullScreen({
                       return (
                         <a
                           key={i}
-                          href={link}
+                          href={link || undefined}
                           target="_blank"
                           rel="noreferrer"
                           className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors text-xs font-medium ${isLight ? 'bg-black/5 border-black/10 hover:bg-black/10 text-black' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
@@ -385,13 +385,13 @@ function ProjectCard({
             <span className={`text-xs font-mono uppercase ${isLight ? 'text-black/20' : 'text-white/10'}`}>No Image</span>
           </div>
         )}
-        <div className={`absolute top-3 right-3 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-md border rounded-full p-2 ${isLight ? 'bg-white/50 border-black/10 text-black' : 'bg-black/50 border-white/10 text-white'}`}>
+        <div className={`absolute top-3 right-3 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300 md:backdrop-blur-md max-md:backdrop-blur-none border rounded-full p-2 ${isLight ? 'bg-white/50 max-md:bg-white border-black/10 text-black' : 'bg-black/50 max-md:bg-black border-white/10 text-white'}`}>
           <ArrowUpRight size={14} />
         </div>
         {project.yearLabel && (
           <motion.div
             layoutId={`card-badge-${project.slug}`}
-            className={`absolute top-3 left-3 px-2.5 py-1 rounded-full backdrop-blur-md border text-[9px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/60 border-black/10 text-[#098d9c]' : 'bg-black/60 border-white/10 text-[#77CE90]'}`}
+            className={`absolute top-3 left-3 px-2.5 py-1 rounded-full md:backdrop-blur-md max-md:backdrop-blur-none border text-[9px] uppercase tracking-widest font-semibold ${spaceMono.className} ${isLight ? 'bg-white/60 max-md:bg-white border-black/10 text-[#098d9c]' : 'bg-black/60 max-md:bg-black border-white/10 text-[#77CE90]'}`}
             transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
           >
             {project.yearLabel}

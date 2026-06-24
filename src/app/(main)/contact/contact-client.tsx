@@ -65,7 +65,7 @@ export function ContactClient({ contact }: { contact: any }) {
                 <div className="flex flex-col gap-1.5">
                   <p className={`text-[9px] uppercase tracking-[0.24em] text-white/30 ${spaceMono.className}`}>Email</p>
                   <a
-                    href={contact.emailHref}
+                    href={contact.emailHref || undefined}
                     className="text-[14px] font-medium text-white/75 hover:text-white transition-colors duration-200 leading-snug"
                     style={{ fontFamily: DISPLAY_SANS }}
                   >
@@ -75,7 +75,7 @@ export function ContactClient({ contact }: { contact: any }) {
                 <div className="flex flex-col gap-1.5">
                   <p className={`text-[9px] uppercase tracking-[0.24em] text-white/30 ${spaceMono.className}`}>Phone</p>
                   <a
-                    href={contact.phoneHref}
+                    href={contact.phoneHref || undefined}
                     className="text-[14px] font-medium text-white/75 hover:text-white transition-colors duration-200 leading-snug"
                     style={{ fontFamily: DISPLAY_SANS }}
                   >

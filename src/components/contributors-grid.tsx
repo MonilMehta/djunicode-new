@@ -13,12 +13,12 @@ function ContributorCard({ person }) {
         {person.desc ? <p>{person.desc}</p> : null}
         <div className="contributor-links">
           {person.github ? (
-            <a href={person.github} target="_blank" rel="noreferrer">
+            <a href={person.github || undefined} target="_blank" rel="noreferrer">
               GitHub
             </a>
           ) : null}
           {person.linkedIn ? (
-            <a href={person.linkedIn} target="_blank" rel="noreferrer">
+            <a href={person.linkedIn || undefined} target="_blank" rel="noreferrer">
               LinkedIn
             </a>
           ) : null}

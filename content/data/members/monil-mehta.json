@@ -1,10 +1,11 @@
 {
-	"key": 136,
-	"name": "Monil Mehta",
-	"email": "",
-	"sapId": 0,
-	"profile_pic": "/images/profile/Monil_Mehta.jpg",
-	"desc": "",
-	"GitHub": "",
-	"LinkedIn": ""
+  "key": 136,
+  "sapId": 0,
+  "name": "Monil Mehta",
+  "email": "monilmehta5@gmail.com",
+  "desc": "Build Ship Repeat. ",
+  "GitHub": "https://github.com/MonilMehta",
+  "LinkedIn": "https://www.linkedin.com/in/monilmeh/",
+  "location": "Bangalore",
+  "company": "Grapevine Round1 AI"
 }

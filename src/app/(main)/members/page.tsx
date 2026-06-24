@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import MembersClient from "./MembersClient";
 import fs from "node:fs";
 import path from "node:path";
+
+export const metadata: Metadata = {
+  title: "Members | DJ Unicode",
+  description: "A collective of students who love to break things, build fun projects, and ship together.",
+};
 
 function toAssetPath(value: string | null | undefined) {
   if (!value || typeof value !== "string") return null;
