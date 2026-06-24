@@ -1,0 +1,21 @@
+{
+	"title": "Celestia",
+	"slug": "celestia",
+	"desc": "The official app and portal for Celestia, the tech and cultural festival of Dwarkadas J. Sanghvi College of Engineering.",
+	"img_cover": "/images/projects/celestia/cover.jpeg",
+	"img": [
+		"/images/projects/celestia/1.jpeg",
+		"/images/projects/celestia/2.jpeg",
+		"/images/projects/celestia/3.jpeg",
+		"/images/projects/celestia/4.jpeg"
+	],
+	"stack": [],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [],
+		"TEmentors": [],
+		"SEmentees": []
+	},
+	"year": "2025-01-01",
+	"links": []
+}

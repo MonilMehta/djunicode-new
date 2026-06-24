@@ -101,10 +101,10 @@ export function HorizontalNarrativeScroll() {
     const img4Scale = useTransform(scrollYProgress, [0.35, 0.45], [1.2, 1]);
 
     const imagesTransforms = [
-        { y: img1Y, opacity: img1Op, scale: img1Scale, rotate: -6, left: "0%", top: "0%", zIndex: 1, src: "/images/groupPhotos/celestia2025.png" },
-        { y: img2Y, opacity: img2Op, scale: img2Scale, rotate: 4, left: "-5%", top: "-5%", zIndex: 2, src: "/images/groupPhotos/futureplan2025.png" },
-        { y: img3Y, opacity: img3Op, scale: img3Scale, rotate: -3, left: "5%", top: "2%", zIndex: 3, src: "/images/groupPhotos/unihacks2026.png" },
-        { y: img4Y, opacity: img4Op, scale: img4Scale, rotate: 5, left: "-2%", top: "-10%", zIndex: 4, src: "/images/groupPhotos/hackprep2025.png" },
+        { y: img1Y, opacity: img1Op, scale: img1Scale, rotate: -6, left: "0%", top: "0%", zIndex: 1, src: "/images/groupPhotos/celestia2025.png", alt: "DJ Unicode members at Celestia 2025 tech festival" },
+        { y: img2Y, opacity: img2Op, scale: img2Scale, rotate: 4, left: "-5%", top: "-5%", zIndex: 2, src: "/images/groupPhotos/futureplan2025.png", alt: "Students collaborating on Future Plan 2025 projects" },
+        { y: img3Y, opacity: img3Op, scale: img3Scale, rotate: -3, left: "5%", top: "2%", zIndex: 3, src: "/images/groupPhotos/unihacks2026.png", alt: "UniHacks 2026 hackathon organized by DJ Unicode" },
+        { y: img4Y, opacity: img4Op, scale: img4Scale, rotate: 5, left: "-2%", top: "-10%", zIndex: 4, src: "/images/groupPhotos/hackprep2025.png", alt: "HackPrep 2025 programming workshop session" },
     ];
 
     // ── Phase 2 (0.40 → 0.56): horizontal pan ─────────────────────────────
@@ -151,7 +151,7 @@ export function HorizontalNarrativeScroll() {
                                 style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}
                             >
                                 <p>
-                                    DJ Unicode is a{" "}
+                                    DJ Unicode is the{" "}
                                     <motion.span style={isMobile ? { color: "#FF6B6B" } : { color: c1 }} className="font-semibold transition-colors duration-300">
                                         student-run community
                                     </motion.span>{" "}
@@ -191,7 +191,7 @@ export function HorizontalNarrativeScroll() {
                                 >
                                     <Image
                                         src={img.src}
-                                        alt={`Group photo ${idx + 1}`}
+                                        alt={img.alt}
                                         fill
                                         className="object-cover"
                                     />
@@ -214,7 +214,7 @@ export function HorizontalNarrativeScroll() {
                                 >
                                     <Image
                                         src={img.src}
-                                        alt={`Group photo ${idx + 1}`}
+                                        alt={img.alt}
                                         fill
                                         className="object-cover"
                                     />
