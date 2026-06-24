@@ -1,0 +1,30 @@
+{
+	"title": "UniHacks 2026",
+	"slug": "unihacks-2026",
+	"description": "UniHacks is an exclusive hackathon organized for the Unicode Mentees, designed to provide a platform where aspiring developers can put their learning into practice, collaborate with peers, and experience the excitement of building real-world solutions under time constraints.",
+	"time": "2026-02-14 08:00:00",
+	"venue": "6th Floor, Seminar Hall",
+	"links": [],
+	"images": [
+		"/images/events/unihacks-2026/1.jpeg",
+		"/images/events/unihacks-2026/2.jpeg",
+		"/images/events/unihacks-2026/3.jpeg",
+		"/images/events/unihacks-2026/4.jpeg",
+		"/images/events/unihacks-2026/5.jpeg",
+		"/images/events/unihacks-2026/6.jpeg",
+		"/images/events/unihacks-2026/7.jpeg",
+		"/images/events/unihacks-2026/8.jpeg",
+		"/images/events/unihacks-2026/9.jpeg",
+		"/images/events/unihacks-2026/10.jpeg"
+	],
+	"contributors": {
+		"Externals": [],
+		"TEmentors": [
+			"aditya-gupta",
+			"tanay-mehta",
+			"swayam-shah",
+			"samyak-vishrani"
+		],
+		"SEmentees": []
+	}
+}
