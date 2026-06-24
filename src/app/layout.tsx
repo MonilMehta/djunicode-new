@@ -2,6 +2,7 @@
 
 
 import { ThemeProvider } from '@/lib/theme-context';
+import { GlimmProvider, InterceptLinks } from 'glimm/next';
 
 export const metadata = {
   metadataBase: new URL("https://www.djunicode.in"),
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <ThemeProvider>
-          {children}
+          <GlimmProvider palette="lagoon">
+            <InterceptLinks />
+            {children}
+          </GlimmProvider>
         </ThemeProvider>
       </body>
     </html>

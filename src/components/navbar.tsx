@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/lib/theme-context";
+import { useGlimm } from "glimm/next";
 
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const { isLight, toggleTheme } = useTheme();
+    const { sweep } = useGlimm();
 
     // Track scroll
     useEffect(() => {
@@ -101,7 +103,11 @@ export function Navbar() {
 
                     {/* Theme toggle */}
                     <button
-                        onClick={toggleTheme}
+                        onClick={() => {
+                            sweep(() => {
+                                toggleTheme();
+                            });
+                        }}
                         aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
                         title={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
                         className={`h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 ${isLight ? 'bg-[#e5e0d4] hover:bg-[#d5cfc0] text-[#172033]' : 'bg-[#5c5c5c] hover:bg-[#7a7a7a] text-white'}`}
