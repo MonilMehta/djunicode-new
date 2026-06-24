@@ -1,0 +1,54 @@
+{
+	"title": "Personal Resource Management",
+	"slug": "personal-resource-management",
+	"desc": "Managing your resources and giving easy access to resources. Easy note taking and focus timer.",
+	"img_cover": "/images/projects/personal-resource-management/cover.jpeg",
+	"img": [
+		"/images/projects/personal-resource-management/1.jpeg",
+		"/images/projects/personal-resource-management/2.jpeg",
+		"/images/projects/personal-resource-management/3.jpeg",
+		"/images/projects/personal-resource-management/4.jpeg",
+		"/images/projects/personal-resource-management/5.jpeg",
+		"/images/projects/personal-resource-management/6.jpeg",
+		"/images/projects/personal-resource-management/7.jpeg",
+		"/images/projects/personal-resource-management/8.jpeg",
+		"/images/projects/personal-resource-management/9.jpeg"
+	],
+	"stack": [
+		"React",
+		"Django"
+	],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [
+			"veer",
+			"unnati",
+			"rishi",
+			"priyank",
+			"vanshika",
+			"monil",
+			"meet",
+			"gaurang"
+		],
+		"TEmentors": [
+			"kriish-chheda",
+			"nitya-ruparel",
+			"manya-jain"
+		],
+		"SEmentees": [
+			"palak-gala",
+			"zalak-gala",
+			"dev-parmar",
+			"smeet-dalal",
+			"palak-jobanputra",
+			"krupa-himte",
+			"soham-shah",
+			"palak-shah",
+			"sarthak-shah"
+		]
+	},
+	"year": "2026-01-01",
+	"links": [
+		"https://uc-project-mind-hive-zalak-projects06.vercel.app/"
+	]
+}

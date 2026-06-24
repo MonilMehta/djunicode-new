@@ -1,0 +1,43 @@
+{
+	"title": "Bounce",
+	"slug": "bounce",
+	"desc": "Bounce is a nightlife discovery and social coordination platform that helps groups discover venues, coordinate plans, and capture memories from nights out.",
+	"img_cover": "/images/projects/bounce/cover.jpeg",
+	"img": [
+		"/images/projects/bounce/1.jpeg",
+		"/images/projects/bounce/2.jpeg",
+		"/images/projects/bounce/3.jpeg",
+		"/images/projects/bounce/4.jpeg"
+	],
+	"stack": [
+		"React Native",
+		"Node.js",
+		"Express.js",
+		"MongoDB",
+		"Cloudinary",
+		"Google Maps API"
+	],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [
+			"rishi-shah",
+			"monil-mehta",
+			"vanshika-shah"
+		],
+		"TEmentors": [
+			"swarali",
+			"aditya-gupta",
+			"avish-shetty",
+			"samyak-vishrani"
+		],
+		"SEmentees": [
+			"virti-panchamia",
+			"malay-pandya",
+			"jash-nikumbhe",
+			"riya-mehta",
+			"ashita-patel"
+		]
+	},
+	"year": "2026-01-01",
+	"links": []
+}

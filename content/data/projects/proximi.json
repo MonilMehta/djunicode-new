@@ -1,0 +1,78 @@
+{
+	"title": "Proximi",
+	"slug": "proximi",
+	"desc": "PROXIMI is a neighborhood sharing and rental platform that enables users to rent and lend household items within their local community.",
+	"img_cover": "/images/projects/proximi/cover.jpeg",
+	"img": [
+		"/images/projects/proximi/1.jpeg",
+		"/images/projects/proximi/2.jpeg",
+		"/images/projects/proximi/3.jpeg",
+		"/images/projects/proximi/4.jpeg",
+		"/images/projects/proximi/5.jpeg",
+		"/images/projects/proximi/6.jpeg",
+		"/images/projects/proximi/7.jpeg",
+		"/images/projects/proximi/8.jpeg"
+	],
+	"stack": [
+		"Next.js",
+		"React",
+		"TypeScript",
+		"Tailwind CSS",
+		"Zustand",
+		"TanStack Query",
+		"Leaflet.js",
+		"Flutter",
+		"Bloc",
+		"Dio",
+		"google_maps_flutter",
+		"firebase_messaging",
+		"razorpay_flutter",
+		"Node.js",
+		"Express.js",
+		"Passport.js",
+		"JWT",
+		"Socket.io",
+		"Zod",
+		"PostgreSQL",
+		"PostGIS",
+		"Prisma",
+		"Redis",
+		"Cloudflare R2"
+	],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [
+			"veer",
+			"unnati",
+			"rishi",
+			"priyank",
+			"vanshika",
+			"monil",
+			"meet",
+			"gaurang"
+		],
+		"TEmentors": [
+			"aakarshit-saxena",
+			"aaditya-kathe",
+			"sargam-nagar",
+			"pranav-ahuja"
+		],
+		"SEmentees": [
+			"ritwik-satghare",
+			"samiksha-patil",
+			"riya-tibdewal",
+			"keenan-menezes",
+			"manasi-sawant",
+			"neev-patel",
+			"adeep-roshan",
+			"sakshi-shelar",
+			"arya-thakkar",
+			"lakshmi-kambala"
+		]
+	},
+	"year": "2025-01-01",
+	"links": [
+		"https://github.com/djunicode/neighbourly",
+		"https://neighbourly1.vercel.app/"
+	]
+}

@@ -1,0 +1,51 @@
+{
+	"title": "StudyMate",
+	"slug": "studymate",
+	"desc": "StudyMate is a cross-platform study management application developed using React Native that helps students organize their academic workflow in one place. The platform allows users to store and manage study notes, create to-do lists, schedule study tasks, track their progress, join real-time video study sessions, and search educational videos from integrated learning resources.",
+	"img_cover": "/images/projects/studymate/cover.jpeg",
+	"img": [
+		"/images/projects/studymate/1.jpeg",
+		"/images/projects/studymate/2.jpeg",
+		"/images/projects/studymate/3.jpeg",
+		"/images/projects/studymate/4.jpeg",
+		"/images/projects/studymate/5.jpeg"
+	],
+	"stack": [
+		"React Native",
+		"Backend Node",
+		"UI/UX Design",
+		"Full Stack Node"
+	],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [
+			"vatsal",
+			"neel",
+			"varun"
+		],
+		"TEmentors": [
+			"krishna-thakkar",
+			"milan",
+			"priyank-sutaria",
+			"unnati-hassanandani",
+			"varad-prabhu"
+		],
+		"SEmentees": [
+			"utsav-dholiya",
+			"ananya-jare",
+			"kavya-shah",
+			"pearl-mody",
+			"rishi-shah",
+			"sargam-nagar",
+			"vaibhav-singh",
+			"vishvesh-shrikant",
+			"mir-hetal"
+		]
+	},
+	"year": "2025-01-01",
+	"links": [
+		"https://github.com/UtsavDholiya05/studymateapp",
+		"https://www.figma.com/design/DFKhBmnddxfHQOkd6QeHID/studyyysmart?node-id=0-1&t=egEKelxhdzcmWu7G-1",
+		"https://studymate-cirr.onrender.com/"
+	]
+}

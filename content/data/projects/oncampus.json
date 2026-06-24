@@ -1,0 +1,56 @@
+{
+	"title": "OnCampus",
+	"slug": "oncampus",
+	"desc": "OnCampus is a web and app platform for committee discovery, networking, event management, and intelligent student recommendations.",
+	"img_cover": "/images/projects/oncampus/cover.jpeg",
+	"img": [
+		"/images/projects/oncampus/1.jpeg",
+		"/images/projects/oncampus/2.jpeg",
+		"/images/projects/oncampus/3.jpeg",
+		"/images/projects/oncampus/4.jpeg",
+		"/images/projects/oncampus/5.jpeg",
+		"/images/projects/oncampus/6.jpeg",
+		"/images/projects/oncampus/7.jpeg"
+	],
+	"stack": [
+		"React.js",
+		"JavaScript",
+		"Tailwind CSS",
+		"Node.js",
+		"Express.js",
+		"Flutter"
+	],
+	"tech": [],
+	"contributors": {
+		"BEmentors": [
+			"vanshika-shah",
+			"rishi-shah",
+			"monil-mehta",
+			"priyank-sutaria"
+		],
+		"TEmentors": [
+			"yash-manek",
+			"rishi-mehta",
+			"dhruv-mehta",
+			"smit-pawar",
+			"rishi-jain"
+		],
+		"SEmentees": [
+			"krupa-shah",
+			"harshika-sharma",
+			"yash-chauhan",
+			"priyanshi-monani",
+			"jiya-shah",
+			"yash-shah",
+			"viraj-shah",
+			"shivam-soneta",
+			"mulraj-gala",
+			"jayni-parekh"
+		]
+	},
+	"year": "2026-01-01",
+	"links": [
+		"https://on-campuss.vercel.app/",
+		"https://github.com/djunicode/MentorLink"
+	]
+}
