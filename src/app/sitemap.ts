@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getAllProjects, getAllEvents } from "@/lib/content";
+import { getAllEvents } from "@/lib/content";
 import { getAllBlogPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -21,19 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.8,
   }));
 
-  // Dynamic Project routes
-  const projects = getAllProjects().map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
   // Dynamic Event routes
   const events = getAllEvents().map((event) => ({
     url: `${baseUrl}/events/${event.slug}`,
     lastModified: new Date().toISOString(),
-    changeFrequency: "weekly" as const,
+    changeFrequency: "monthly" as const, // Events are typically historical
     priority: 0.7,
   }));
 
@@ -45,5 +37,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...projects, ...events, ...blogPosts];
+  return [...staticRoutes, ...events, ...blogPosts];
 }

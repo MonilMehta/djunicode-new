@@ -87,7 +87,7 @@ export function AlumniMapSection() {
           borderColor: isLight ? "rgba(0,0,0,0.08)" : "#111"
         }}
       >
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none mt-16 md:mt-24">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none mt-16 md:mt-24" aria-hidden="true">
           <div className="w-full max-w-7xl mx-auto px-4 opacity-70">
             <WorldMap dots={mapDots} lineColor={isLight ? "#0f1824" : "#ffffff"} />
           </div>

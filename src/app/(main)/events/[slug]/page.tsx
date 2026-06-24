@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ContributorsGrid } from "@/components/contributors-grid";
@@ -8,19 +9,35 @@ export function generateStaticParams() {
   return getEventSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;
   const event = getEventBySlug(slug);
 
   if (!event) {
     return {
-      title: "Event not found",
+      title: "Event not found | DJ Unicode",
     };
   }
 
+  const defaultImage = event.gallery?.[0] || "/opengraph-image.png";
+
   return {
-    title: event.title,
-    description: event.description,
+    title: `${event.title} | Events | DJ Unicode`,
+    description: event.desc || event.description || `Read about the ${event.title} event hosted by DJ Unicode.`,
+    openGraph: {
+      title: `${event.title} | DJ Unicode Events`,
+      description: event.desc || event.description || `Read about the ${event.title} event hosted by DJ Unicode.`,
+      url: `https://www.djunicode.in/events/${slug}`,
+      images: [
+        {
+          url: defaultImage,
+          width: 1200,
+          height: 630,
+          alt: event.title,
+        },
+      ],
+      type: "article",
+    },
   };
 }
 
@@ -32,8 +49,37 @@ export default async function EventDetailPage({ params }) {
     notFound();
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": event.title,
+    "description": event.desc || event.description,
+    "image": event.gallery?.[0] ? `https://www.djunicode.in${event.gallery[0]}` : "https://www.djunicode.in/opengraph-image.png",
+    "startDate": event.year ? new Date(event.year).toISOString() : new Date().toISOString(),
+    "location": {
+      "@type": "Place",
+      "name": "Dwarkadas J. Sanghvi College of Engineering",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vile Parle",
+        "addressLocality": "Mumbai",
+        "postalCode": "400056",
+        "addressCountry": "IN"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "DJ Unicode",
+      "url": "https://www.djunicode.in"
+    }
+  };
+
   return (
     <section className="section-block page-top">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="shell">
         <div className="detail-hero">
           <div className="detail-copy">

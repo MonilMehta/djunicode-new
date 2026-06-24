@@ -69,12 +69,12 @@ export function DirectoryCtaSection() {
         <div className="flex w-[200%] animate-scroll-left">
           <div className="flex w-1/2 justify-around gap-6 px-3">
             {ROW_1_AVATARS.map((src, i) => (
-              <img key={i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt="Member" />
+              <img key={i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt={`DJ Unicode Member ${i + 1}`} />
             ))}
           </div>
           <div className="flex w-1/2 justify-around gap-6 px-3">
             {ROW_1_AVATARS.map((src, i) => (
-              <img key={'dup-' + i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt="Member" />
+              <img key={'dup-' + i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt={`DJ Unicode Member Duplicate ${i + 1}`} />
             ))}
           </div>
         </div>
@@ -83,12 +83,12 @@ export function DirectoryCtaSection() {
         <div className="flex w-[200%] animate-scroll-right -ml-[20%]">
           <div className="flex w-1/2 justify-around gap-6 px-3">
             {ROW_2_AVATARS.map((src, i) => (
-              <img key={i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt="Member" />
+              <img key={i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt={`DJ Unicode Member Row 2 ${i + 1}`} />
             ))}
           </div>
           <div className="flex w-1/2 justify-around gap-6 px-3">
             {ROW_2_AVATARS.map((src, i) => (
-              <img key={'dup-' + i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt="Member" />
+              <img key={'dup-' + i} src={src} className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover saturate-50 blur-[1px] transition-all duration-700" alt={`DJ Unicode Member Row 2 Duplicate ${i + 1}`} />
             ))}
           </div>
         </div>

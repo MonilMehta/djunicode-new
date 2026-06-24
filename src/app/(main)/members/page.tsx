@@ -5,7 +5,20 @@ import path from "node:path";
 
 export const metadata: Metadata = {
   title: "Members | DJ Unicode",
-  description: "A collective of students who love to break things, build fun projects, and ship together.",
+  description: "A collective of students who love to break things, build fun projects, and ship together. Meet the developers, designers, and innovators of DJ Unicode.",
+  openGraph: {
+    title: "Members Directory | DJ Unicode",
+    description: "Meet the developers, designers, and innovators of DJ Unicode.",
+    url: "https://www.djunicode.in/members",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DJ Unicode - Members",
+      },
+    ],
+  },
 };
 
 function toAssetPath(value: string | null | undefined) {
@@ -29,5 +42,21 @@ export default function MembersPage() {
     });
   }
 
-  return <MembersClient membersData={members} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "DJ Unicode Members",
+            "description": "Meet the developers, designers, and innovators of DJ Unicode.",
+            "url": "https://www.djunicode.in/members"
+          })
+        }}
+      />
+      <MembersClient membersData={members} />
+    </>
+  );
 }

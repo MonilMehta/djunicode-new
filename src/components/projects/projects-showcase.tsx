@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { X, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { Space_Mono } from "next/font/google";
@@ -435,9 +436,27 @@ function ProjectCard({
 export function ProjectsShowcase({ projects }: { projects: Project[] }) {
   const [selected, setSelected] = useState<Project | null>(null);
   const { isLight } = useTheme();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleOpen = useCallback((p: Project) => setSelected(p), []);
-  const handleClose = useCallback(() => setSelected(null), []);
+  const handleOpen = useCallback((p: Project) => {
+    setSelected(p);
+    router.replace(`/projects?project=${p.slug}`, { scroll: false });
+  }, [router]);
+
+  const handleClose = useCallback(() => {
+    setSelected(null);
+    if (searchParams.get("project")) {
+      router.replace("/projects", { scroll: false });
+    }
+  }, [router, searchParams]);
+
+  useEffect(() => {
+    const slug = searchParams.get("project");
+    if (!slug) return;
+    const project = projects.find((item) => item.slug === slug);
+    if (project) setSelected(project);
+  }, [searchParams, projects]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

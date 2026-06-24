@@ -8,7 +8,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface Project {
     title: string;
-    description: string;
+    desc: string;
     slug: string;
     coverImage: string;
     type: string[];
@@ -101,7 +101,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                                 key={project.slug}
                                 className="w-[85vw] md:w-[600px] shrink-0 group relative snap-center"
                             >
-                                <Link href={`/projects/${project.slug}`} className="block w-full h-full">
+                                <Link href={`/projects?project=${project.slug}`} className="block w-full h-full">
                                     <div className="w-full aspect-[4/3] rounded-[24px] overflow-hidden relative border border-[#222] md:shadow-[0_20px_40px_rgba(0,0,0,0.5)]" style={{ transform: "translateZ(0)" }}>
                                         {/* Image */}
                                         {project.coverImage && (
@@ -147,7 +147,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                                         className="text-white/60 text-base mt-4 max-w-lg line-clamp-2 md:line-clamp-none"
                                         style={{ fontFamily: "'Satoshi','Inter',sans-serif" }}
                                     >
-                                        {project.description}
+                                        {project.desc}
                                     </p>
                                 </Link>
                             </div>

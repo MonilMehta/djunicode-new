@@ -1,15 +1,46 @@
+import { Metadata } from "next";
 import { getAllEvents } from "@/lib/content";
 import { EventsMasonry } from "@/components/events/events-masonry";
 
-export const metadata = {
-  title: "Events Ecosystem",
+export const metadata: Metadata = {
+  title: "Events Ecosystem | DJ Unicode",
+  description: "Browse the upcoming and past events hosted by DJ Unicode. Join our hackathons, technical workshops, and speaker sessions to learn and grow.",
+  openGraph: {
+    title: "Events Ecosystem | DJ Unicode",
+    description: "Browse the upcoming and past events hosted by DJ Unicode. Join our hackathons, technical workshops, and speaker sessions.",
+    url: "https://www.djunicode.in/events",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DJ Unicode - Events Ecosystem",
+      },
+    ],
+  },
 };
 
 export default function EventsPage() {
   const events = getAllEvents();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "DJ Unicode Events Ecosystem",
+    "description": "Browse the upcoming and past events hosted by DJ Unicode.",
+    "url": "https://www.djunicode.in/events",
+    "about": {
+      "@type": "Thing",
+      "name": "Tech Hackathons and Workshops"
+    }
+  };
+
   return (
     <main className="bg-background min-h-screen font-sans transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ── Page Header Matching Home Aesthetics ───────────────────────────── */}
       <section className="relative w-full px-6 md:px-12 pt-32 pb-16 md:pt-48 md:pb-24">
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-12 z-20 relative">
