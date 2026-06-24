@@ -10,7 +10,7 @@ const HASH_FILE = path.join(process.cwd(), 'content', 'data', 'settings', 'passw
 export async function GET(req: NextRequest) {
   // Auth check
   const cookieStore = await cookies();
-  const authCookie = cookieStore.get('keystatic-auth');
+  const authCookie = cookieStore.get('vault-auth');
   if (authCookie?.value !== 'true') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

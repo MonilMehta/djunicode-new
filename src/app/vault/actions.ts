@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
+import { redirect } from 'next/navigation';
 
 const HASH_FILE = path.join(process.cwd(), 'content', 'data', 'settings', 'password-hash.txt');
 
@@ -27,16 +28,18 @@ export async function authenticate(formData: FormData) {
 
   if (hash === correctHash) {
     const cookieStore = await cookies();
-    cookieStore.set('keystatic-auth', 'true', {
+    cookieStore.set('vault-auth', 'true', {
       maxAge: 60 * 60 * 24 * 30, // 30 days
       path: '/',
       httpOnly: true,
       sameSite: 'lax',
     });
+    redirect("/keystatic");
   }
 }
 
 export async function logout() {
   const cookieStore = await cookies();
-  cookieStore.delete('keystatic-auth');
+  cookieStore.delete('vault-auth');
+  redirect("/vault");
 }

@@ -1,4 +1,3 @@
-import "../globals.css";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { getContactDetails } from "@/lib/content";

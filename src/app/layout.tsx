@@ -1,6 +1,7 @@
 
 
 
+import "./globals.css";
 import { ThemeProvider } from '@/lib/theme-context';
 import { GlimmProvider, InterceptLinks } from 'glimm/next';
 

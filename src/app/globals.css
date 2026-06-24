@@ -1591,3 +1591,15 @@ html[data-theme="light"] .members-page-root [class*="from-black/80"] {
 html[data-theme="light"] .preloader-bg {
   background-color: #f7f1e6 !important;
 }
+/* ── Keystatic Override ─────────────────────────────────────────────────── */
+body:has(.keystatic-wrapper) {
+  background: transparent !important;
+}
+body:has(.keystatic-wrapper)::before {
+  display: none !important;
+}
+
+html[data-theme="dark"] body:has(.keystatic-wrapper),
+html.dark body:has(.keystatic-wrapper) {
+  background: transparent !important;
+}

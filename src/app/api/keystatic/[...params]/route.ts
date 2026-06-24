@@ -6,7 +6,7 @@ const handler = makeRouteHandler({ config });
 
 const checkAuth = async () => {
   const cookieStore = await cookies();
-  const authCookie = cookieStore.get('keystatic-auth');
+  const authCookie = cookieStore.get('vault-auth');
   return authCookie?.value === 'true';
 };
 
